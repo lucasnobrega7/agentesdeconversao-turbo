@@ -1,0 +1,635 @@
+// Prisma Schema - Agentes de Conversão
+// Arquitetura: Event-Driven Microservices with Domain Boundaries
+// Author: Lucas Nobrega
+// Version: 1.0.0
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "asyncio"
+  recursive_type_depth = 5
+  previewFeatures      = ["multiSchema", "postgresqlExtensions", "fullTextSearch"]
+}
+
+// ==================== BOUNDED CONTEXT: IDENTITY & ACCESS MANAGEMENT ====================
+
+model User {
+  id                String              @id @default(cuid())
+  supabaseId        String              @unique
+  email             String              @unique
+  name              String?
+  avatarUrl         String?
+  role              UserRole            @default(USER)
+  
+  // Multi-tenancy
+  organizationId    String?
+  organization      Organization?       @relation(fields: [organizationId], references: [id])
+  
+  // Relationships
+  agents            Agent[]             @relation("AgentOwner")
+  conversations     Conversation[]      @relation("ConversationOwner")
+  apiKeys           ApiKey[]
+  auditLogs         AuditLog[]
+  
+  // Metadata
+  metadata          Json?
+  lastActiveAt      DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([email])
+  @@index([organizationId])
+  @@index([supabaseId])
+}
+
+model Organization {
+  id                String              @id @default(cuid())
+  name              String
+  subdomain         String              @unique
+  logoUrl           String?
+  
+  // Billing & Limits
+  billingTier       BillingTier         @default(STARTER)
+  maxAgents         Int                 @default(5)
+  maxConversations  Int                 @default(1000)
+  maxUsers          Int                 @default(3)
+  
+  // Settings
+  settings          Json                @default("{}")
+  
+  // Relationships
+  users             User[]
+  agents            Agent[]
+  apiKeys           ApiKey[]
+  conversations     Conversation[]
+  knowledgeBases    KnowledgeBase[]
+  integrations      Integration[]
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([subdomain])
+}
+
+// ==================== BOUNDED CONTEXT: INTELLIGENT AGENTS ====================
+
+model Agent {
+  id                String              @id @default(cuid())
+  name              String
+  description       String?
+  avatarUrl         String?
+  
+  // AI Configuration
+  model             String              @default("openai/gpt-3.5-turbo")
+  temperature       Float               @default(0.7)
+  maxTokens         Int                 @default(2048)
+  topP              Float               @default(1.0)
+  frequencyPenalty  Float               @default(0.0)
+  presencePenalty   Float               @default(0.0)
+  
+  // Behavioral Configuration
+  systemPrompt      String              @db.Text
+  welcomeMessage    String?
+  fallbackMessage   String?
+  responseStyle     ResponseStyle       @default(BALANCED)
+  
+  // State Management
+  status            AgentStatus         @default(DRAFT)
+  isActive          Boolean             @default(true)
+  
+  // Relationships
+  organizationId    String
+  organization      Organization        @relation(fields: [organizationId], references: [id])
+  ownerId           String
+  owner             User                @relation("AgentOwner", fields: [ownerId], references: [id])
+  
+  conversations     Conversation[]
+  flows             Flow[]
+  knowledgeBases    AgentKnowledgeBase[]
+  tools             AgentTool[]
+  metrics           AgentMetric[]
+  integrations      AgentIntegration[]
+  
+  // Versioning
+  version           Int                 @default(1)
+  publishedAt       DateTime?
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([organizationId])
+  @@index([ownerId])
+  @@index([status])
+}
+
+model Flow {
+  id                String              @id @default(cuid())
+  name              String
+  description       String?
+  
+  // ReactFlow Data Structure
+  flowData          Json                // Complete flow structure
+  
+  // Configuration
+  triggers          Json?               // Event triggers configuration
+  variables         Json?               // Flow variables
+  
+  // State
+  status            FlowStatus          @default(DRAFT)
+  isDefault         Boolean             @default(false)
+  
+  // Relationships
+  agentId           String
+  agent             Agent               @relation(fields: [agentId], references: [id])
+  
+  // Versioning
+  version           Int                 @default(1)
+  publishedAt       DateTime?
+  flowVersions      FlowVersion[]
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([agentId])
+  @@index([status])
+}
+
+model FlowVersion {
+  id                String              @id @default(cuid())
+  flowId            String
+  flow              Flow                @relation(fields: [flowId], references: [id])
+  version           Int
+  flowData          Json
+  publishedBy       String
+  publishedAt       DateTime            @default(now())
+  
+  @@unique([flowId, version])
+  @@index([flowId])
+}
+
+// ==================== BOUNDED CONTEXT: CONVERSATIONS ====================
+
+model Conversation {
+  id                String              @id @default(cuid())
+  sessionId         String              @unique @default(cuid())
+  
+  // Channel Configuration
+  channel           ConversationChannel @default(WEBCHAT)
+  channelData       Json?               // Channel-specific data
+  
+  // State Management
+  status            ConversationStatus  @default(ACTIVE)
+  
+  // Customer Information
+  customerName      String?
+  customerEmail     String?
+  customerPhone     String?
+  customerMetadata  Json?
+  
+  // Relationships
+  agentId           String
+  agent             Agent               @relation(fields: [agentId], references: [id])
+  organizationId    String
+  organization      Organization        @relation(fields: [organizationId], references: [id])
+  ownerId           String?
+  owner             User?               @relation("ConversationOwner", fields: [ownerId], references: [id])
+  
+  messages          Message[]
+  events            ConversationEvent[]
+  
+  // Metrics
+  startedAt         DateTime            @default(now())
+  endedAt           DateTime?
+  lastMessageAt     DateTime?
+  messageCount      Int                 @default(0)
+  
+  // Analytics
+  sentiment         Float?              // -1 to 1
+  satisfaction      Int?                // 1 to 5
+  tags              String[]
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([agentId])
+  @@index([organizationId])
+  @@index([status])
+  @@index([startedAt])
+  @@index([sessionId])
+}
+
+model Message {
+  id                String              @id @default(cuid())
+  
+  // Content
+  role              MessageRole
+  content           String              @db.Text
+  attachments       Json?               // File attachments
+  
+  // AI Metrics
+  model             String?
+  promptTokens      Int?
+  completionTokens  Int?
+  totalTokens       Int?
+  latencyMs         Int?
+  
+  // Relationships
+  conversationId    String
+  conversation      Conversation        @relation(fields: [conversationId], references: [id])
+  
+  // Analysis
+  sentiment         Float?
+  intent            String?
+  entities          Json?
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  
+  @@index([conversationId])
+  @@index([createdAt])
+}
+
+// ==================== BOUNDED CONTEXT: KNOWLEDGE MANAGEMENT ====================
+
+model KnowledgeBase {
+  id                String              @id @default(cuid())
+  name              String
+  description       String?
+  
+  // Configuration
+  type              KnowledgeType
+  config            Json                @default("{}")
+  
+  // State
+  status            KnowledgeStatus     @default(PROCESSING)
+  
+  // Relationships
+  organizationId    String
+  organization      Organization        @relation(fields: [organizationId], references: [id])
+  
+  documents         Document[]
+  agents            AgentKnowledgeBase[]
+  
+  // Statistics
+  totalDocuments    Int                 @default(0)
+  totalChunks       Int                 @default(0)
+  totalTokens       Int                 @default(0)
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([organizationId])
+  @@index([type])
+}
+
+model Document {
+  id                String              @id @default(cuid())
+  name              String
+  mimeType          String
+  size              Int
+  url               String?
+  
+  // Processing
+  status            DocumentStatus      @default(PENDING)
+  error             String?
+  
+  // Content
+  content           String?             @db.Text
+  chunks            DocumentChunk[]
+  
+  // Relationships
+  knowledgeBaseId   String
+  knowledgeBase     KnowledgeBase       @relation(fields: [knowledgeBaseId], references: [id])
+  
+  // Metadata
+  metadata          Json?
+  processedAt       DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([knowledgeBaseId])
+  @@index([status])
+}
+
+model DocumentChunk {
+  id                String              @id @default(cuid())
+  
+  // Content
+  content           String              @db.Text
+  embedding         Float[]
+  
+  // Positioning
+  chunkIndex        Int
+  startChar         Int
+  endChar           Int
+  
+  // Relationships
+  documentId        String
+  document          Document            @relation(fields: [documentId], references: [id])
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  
+  @@index([documentId])
+  @@index([embedding(ops: IvfflatOps)], type: Hnsw(m: 16, efConstruction: 200))
+}
+
+// ==================== BOUNDED CONTEXT: INTEGRATIONS ====================
+
+model Integration {
+  id                String              @id @default(cuid())
+  name              String
+  type              IntegrationType
+  
+  // Configuration
+  config            Json                // Encrypted configuration
+  isActive          Boolean             @default(true)
+  
+  // Relationships
+  organizationId    String
+  organization      Organization        @relation(fields: [organizationId], references: [id])
+  
+  agents            AgentIntegration[]
+  
+  // Metadata
+  metadata          Json?
+  lastSyncAt        DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([organizationId])
+  @@index([type])
+}
+
+// ==================== BOUNDED CONTEXT: ANALYTICS & METRICS ====================
+
+model AgentMetric {
+  id                String              @id @default(cuid())
+  
+  // Time Window
+  date              DateTime            @db.Date
+  hour              Int?                // 0-23
+  
+  // Metrics
+  conversationCount Int                 @default(0)
+  messageCount      Int                 @default(0)
+  totalTokens       Int                 @default(0)
+  avgResponseTime   Float               @default(0)
+  avgSatisfaction   Float?
+  
+  // Relationships
+  agentId           String
+  agent             Agent               @relation(fields: [agentId], references: [id])
+  
+  // Metadata
+  createdAt         DateTime            @default(now())
+  
+  @@unique([agentId, date, hour])
+  @@index([agentId])
+  @@index([date])
+}
+
+model ConversationEvent {
+  id                String              @id @default(cuid())
+  
+  // Event Data
+  type              EventType
+  data              Json
+  
+  // Relationships
+  conversationId    String
+  conversation      Conversation        @relation(fields: [conversationId], references: [id])
+  
+  // Metadata
+  createdAt         DateTime            @default(now())
+  
+  @@index([conversationId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+// ==================== BOUNDED CONTEXT: SECURITY & COMPLIANCE ====================
+
+model ApiKey {
+  id                String              @id @default(cuid())
+  name              String
+  key               String              @unique
+  hashedKey         String              @unique
+  
+  // Permissions
+  scopes            String[]
+  rateLimit         Int                 @default(100)
+  
+  // State
+  isActive          Boolean             @default(true)
+  lastUsedAt        DateTime?
+  expiresAt         DateTime?
+  
+  // Relationships
+  userId            String
+  user              User                @relation(fields: [userId], references: [id])
+  organizationId    String
+  organization      Organization        @relation(fields: [organizationId], references: [id])
+  
+  // Metadata
+  metadata          Json?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([hashedKey])
+  @@index([userId])
+  @@index([organizationId])
+}
+
+model AuditLog {
+  id                String              @id @default(cuid())
+  
+  // Action
+  action            String
+  resource          String
+  resourceId        String?
+  
+  // Context
+  ipAddress         String?
+  userAgent         String?
+  
+  // Data
+  oldData           Json?
+  newData           Json?
+  
+  // Relationships
+  userId            String
+  user              User                @relation(fields: [userId], references: [id])
+  
+  // Metadata
+  createdAt         DateTime            @default(now())
+  
+  @@index([userId])
+  @@index([resource])
+  @@index([createdAt])
+}
+
+// ==================== JUNCTION TABLES ====================
+
+model AgentKnowledgeBase {
+  agentId           String
+  agent             Agent               @relation(fields: [agentId], references: [id])
+  knowledgeBaseId   String
+  knowledgeBase     KnowledgeBase       @relation(fields: [knowledgeBaseId], references: [id])
+  
+  @@id([agentId, knowledgeBaseId])
+  @@index([agentId])
+  @@index([knowledgeBaseId])
+}
+
+model AgentTool {
+  id                String              @id @default(cuid())
+  
+  // Tool Configuration
+  name              String
+  type              ToolType
+  config            Json
+  isActive          Boolean             @default(true)
+  
+  // Relationships
+  agentId           String
+  agent             Agent               @relation(fields: [agentId], references: [id])
+  
+  // Metadata
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([agentId])
+}
+
+model AgentIntegration {
+  agentId           String
+  agent             Agent               @relation(fields: [agentId], references: [id])
+  integrationId     String
+  integration       Integration         @relation(fields: [integrationId], references: [id])
+  
+  config            Json?               // Agent-specific config
+  isActive          Boolean             @default(true)
+  
+  @@id([agentId, integrationId])
+  @@index([agentId])
+  @@index([integrationId])
+}
+
+// ==================== ENUMS ====================
+
+enum UserRole {
+  ADMIN
+  OWNER
+  MEMBER
+  USER
+}
+
+enum BillingTier {
+  STARTER
+  PROFESSIONAL
+  ENTERPRISE
+}
+
+enum AgentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ResponseStyle {
+  CONCISE
+  BALANCED
+  DETAILED
+}
+
+enum FlowStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ConversationChannel {
+  WEBCHAT
+  WHATSAPP
+  TELEGRAM
+  SLACK
+  API
+}
+
+enum ConversationStatus {
+  ACTIVE
+  WAITING
+  CLOSED
+  ARCHIVED
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+  FUNCTION
+}
+
+enum KnowledgeType {
+  DOCUMENT
+  URL
+  DATABASE
+  API
+  MCP_CONNECTOR
+}
+
+enum KnowledgeStatus {
+  PROCESSING
+  READY
+  ERROR
+}
+
+enum DocumentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  ERROR
+}
+
+enum IntegrationType {
+  WHATSAPP
+  TELEGRAM
+  SLACK
+  WEBHOOK
+  EVOLUTION_API
+  MCP
+}
+
+enum ToolType {
+  FUNCTION
+  API_CALL
+  DATABASE_QUERY
+  CUSTOM
+}
+
+enum EventType {
+  MESSAGE_SENT
+  MESSAGE_RECEIVED
+  AGENT_TAKEOVER
+  HUMAN_TAKEOVER
+  CONVERSATION_RATED
+  CONVERSATION_TAGGED
+  ERROR
+}

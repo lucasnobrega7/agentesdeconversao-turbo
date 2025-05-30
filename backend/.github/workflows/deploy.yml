@@ -1,0 +1,55 @@
+name: Deploy Enterprise
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          
+      - name: Run tests
+        run: |
+          python -c "from main_enterprise import app; print('Backend OK')"
+          
+      - name: Deploy to Railway
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Deploy to Railway via CLI or API"
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+        
+      - name: Build
+        working-directory: ./frontend
+        run: npm run build
+        
+      - name: Deploy to Vercel
+        if: github.ref == 'refs/heads/main'
+        working-directory: ./frontend
+        run: |
+          echo "Deploy to Vercel via CLI"

@@ -1,0 +1,13 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+healthcheckPath = "/health"
+restartPolicyType = "ON_FAILURE"
+
+[environments.production]
+variables = [
+  "DATABASE_URL=${{Postgres.DATABASE_URL}}",
+  "ENVIRONMENT=production",
+  "DEBUG=false"
+]
