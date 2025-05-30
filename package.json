@@ -1,0 +1,40 @@
+{
+  "name": "agentes-de-conversao",
+  "version": "1.0.0",
+  "description": "🚀 A PLATAFORMA que vai DOMINAR o mercado de Agentes IA",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "packages/ui-enterprise"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint", 
+    "clean": "turbo run clean",
+    "db:generate": "cd packages/prisma && prisma generate",
+    "db:push": "cd packages/prisma && prisma db push",
+    "db:studio": "cd packages/prisma && prisma studio",
+    "start:server": "cd packages/server && pnpm start",
+    "start:ui": "cd packages/ui && pnpm dev",
+    "start:dashboard": "cd apps/dashboard && pnpm dev",
+    "test": "turbo run test",
+    "install:clean": "rm -rf node_modules pnpm-lock.yaml && pnpm install",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "setup": "./scripts/setup-environment.sh"
+  },
+  "devDependencies": {
+    "turbo": "^1.13.4",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

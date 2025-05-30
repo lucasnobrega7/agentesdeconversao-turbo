@@ -1,47 +1,85 @@
-"""
-=============================================================================
-DATABASE.PY SIMPLIFICADO - FUNCIONA DE PRIMEIRA
-Menos blablablá, mais código que roda
-=============================================================================
-"""
+from typing import Optional, List, Dict, Any
+from datetime import datetime
+import uuid
 
-from typing import AsyncGenerator
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
-from app.core.config import settings
+try:
+    from supabase import create_client, Client
+    SUPABASE_AVAILABLE = True
+except ImportError:
+    SUPABASE_AVAILABLE = False
+    print("⚠️  Supabase client não disponível - usando modo fallback")
 
-# Engine direto, sem firula
-engine = create_async_engine(
-    settings.DATABASE_URL,
-    pool_size=settings.DB_POOL_SIZE,
-    max_overflow=settings.DB_MAX_OVERFLOW,
-    pool_pre_ping=settings.DB_POOL_PRE_PING,
-    echo=settings.DEBUG
-)
+from .config import settings
 
-# Session factory
-async_session = async_sessionmaker(
-    bind=engine,
-    class_=AsyncSession,
-    expire_on_commit=False
-)
+class DatabaseService:
+    def __init__(self):
+        self.supabase_client = None
+        self.use_supabase = False
+        
+        # Fallback storage
+        self.agents_db = {}
+        self.conversations_db = {}
+        self.users_db = {}
+        
+        # Initialize Supabase if available
+        if SUPABASE_AVAILABLE:
+            try:
+                self.supabase_client = create_client(
+                    settings.SUPABASE_URL,
+                    settings.SUPABASE_SERVICE_KEY
+                )
+                self.use_supabase = True
+                print("✅ Supabase client inicializado")
+            except Exception as e:
+                print(f"⚠️  Falha na inicialização do Supabase: {e}")
+    
+    # Agent methods
+    async def get_agents(self, organization_id: Optional[str] = None) -> List[dict]:
+        """Retrieve all agents, optionally filtered by organization"""
+        if self.use_supabase:
+            try:
+                query = self.supabase_client.table("agents").select("*")
+                if organization_id:
+                    query = query.eq("organization_id", organization_id)
+                response = query.execute()
+                if response.data:
+                    return response.data
+            except Exception as e:
+                print(f"Supabase error: {e}")
+        return list(self.agents_db.values())
+    
+    async def create_agent(self, agent_data: dict) -> dict:
+        """Create a new agent"""
+        if "id" not in agent_data:
+            agent_data["id"] = str(uuid.uuid4())
+        
+        now = datetime.utcnow().isoformat()
+        agent_data.update({
+            "created_at": now,
+            "updated_at": now
+        })
+        
+        if self.use_supabase:
+            try:
+                response = self.supabase_client.table("agents").insert(agent_data).execute()
+                if response.data:
+                    return response.data[0]
+            except Exception as e:
+                print(f"Supabase error: {e}")
+        
+        self.agents_db[agent_data["id"]] = agent_data
+        return agent_data
+    
+    async def get_agent(self, agent_id: str) -> Optional[dict]:
+        """Get a specific agent by ID"""
+        if self.use_supabase:
+            try:
+                response = self.supabase_client.table("agents").select("*").eq("id", agent_id).execute()
+                if response.data and len(response.data) > 0:
+                    return response.data[0]
+            except Exception as e:
+                print(f"Supabase error: {e}")
+        return self.agents_db.get(agent_id)
 
-# Dependency que funciona
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
-    async with async_session() as session:
-        try:
-            yield session
-            await session.commit()
-        except Exception:
-            await session.rollback()
-            raise
-        finally:
-            await session.close()
-
-# Health check básico
-async def check_database_health() -> dict:
-    try:
-        async with async_session() as session:
-            await session.execute("SELECT 1")
-            return {"status": "healthy"}
-    except Exception as e:
-        return {"status": "unhealthy", "error": str(e)}
+# Global database service instance
+database = DatabaseService()

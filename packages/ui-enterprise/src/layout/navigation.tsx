@@ -1,0 +1,1 @@
+export default function Placeholder() { return <div>Temporarily disabled for build</div> }

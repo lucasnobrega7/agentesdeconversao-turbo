@@ -1,96 +1,34 @@
-"""
-Core Configuration Module
-Implements the Twelve-Factor App methodology for configuration management
-"""
-from pydantic_settings import BaseSettings
-from typing import Optional, List
-from functools import lru_cache
 import os
-
+from typing import Optional
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    """
-    Application settings following environment-based configuration pattern
-    """
-    # Application Core
-    PROJECT_NAME: str = "Agentes de Conversão"
-    VERSION: str = "1.0.0"
+    # API
     API_V1_STR: str = "/api/v1"
-    DEBUG: bool = False
+    PROJECT_NAME: str = "Agentes de Conversão"
+    VERSION: str = "2.0.0"
+    DESCRIPTION: str = "API Enterprise para Agentes Inteligentes"
     
-    # Server Configuration
-    SERVER_HOST: str = "0.0.0.0"
-    SERVER_PORT: int = 8000
-    WORKERS: int = 4
+    # CORS
+    BACKEND_CORS_ORIGINS: list = ["*"]  # Configure properly in production
     
-    # Database Configuration
-    DATABASE_URL: str
-    DATABASE_POOL_SIZE: int = 20
-    DATABASE_MAX_OVERFLOW: int = 0
+    # Database
+    SUPABASE_URL: str = "https://faccixlabriqwxkxqprw.supabase.co"
+    SUPABASE_ANON_KEY: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhY2NpeGxhYnJpcXd4a3hxcHJ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY4NzQ4NzMsImV4cCI6MjA1MjQ1MDg3M30.eBGqJ-t9V0hK-QIDJzN0SZuQ4QX-Y66TwBJ1sVcWKGQ"
+    SUPABASE_SERVICE_KEY: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhY2NpeGxhYnJpcXd4a3hxcHJ3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNjg3NDg3MywiZXhwIjoyMDUyNDUwODczfQ.8J3XrqFWYEEjCG-yT5ZN_hV4Bl3sMhUEV0vEhMJDlNc"
     
-    # Redis Configuration
-    REDIS_URL: Optional[str] = None
-    REDIS_POOL_SIZE: int = 10
+    # AI Providers
+    OPENAI_API_KEY: Optional[str] = None
+    OPENROUTER_API_KEY: Optional[str] = None
+    ANTHROPIC_API_KEY: Optional[str] = None
     
-    # Authentication & Security
-    JWT_SECRET_KEY: str
-    JWT_ALGORITHM: str = "HS256"
+    # Security
+    SECRET_KEY: str = "your-secret-key-here"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
-    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     
-    # Supabase Integration
-    SUPABASE_URL: str
-    SUPABASE_SERVICE_KEY: str
-    SUPABASE_JWT_SECRET: str
+    # Redis (for caching and sessions)
+    REDIS_URL: Optional[str] = None
     
-    # OpenRouter AI Configuration
-    OPENROUTER_API_KEY: str
-    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
-    DEFAULT_AI_MODEL: str = "openai/gpt-3.5-turbo"
-    
-    # CORS Configuration
-    BACKEND_CORS_ORIGINS: List[str] = [
-        "http://localhost:3000",
-        "https://dash.agentesdeconversao.ai",
-        "https://lp.agentesdeconversao.ai",
-    ]
-    
-    # Rate Limiting
-    RATE_LIMIT_REQUESTS: int = 100
-    RATE_LIMIT_PERIOD: int = 60  # seconds
-    
-    # Monitoring & Observability
-    SENTRY_DSN: Optional[str] = None
-    LOG_LEVEL: str = "INFO"
-    ENABLE_METRICS: bool = True
-    
-    # Feature Flags
-    ENABLE_WEBSOCKETS: bool = True
-    ENABLE_BACKGROUND_TASKS: bool = True
-    ENABLE_CACHE: bool = True
-    
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
-        
-    @property
-    def is_production(self) -> bool:
-        """Check if running in production environment"""
-        return not self.DEBUG
-    
-    @property
-    def database_url_async(self) -> str:
-        """Convert sync database URL to async"""
-        return self.DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://")
+    model_config = {"env_file": ".env", "case_sensitive": True}
 
-
-@lru_cache()
-def get_settings() -> Settings:
-    """
-    Cached settings instance following Singleton pattern
-    """
-    return Settings()
-
-
-# Global settings instance
-settings = get_settings()
+settings = Settings()

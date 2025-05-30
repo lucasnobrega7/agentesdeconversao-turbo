@@ -4,28 +4,34 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   images: {
-    domains: ['faccixlabriqwxkxqprw.supabase.co'],
-    formats: ['image/webp', 'image/avif'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
-  headers: async () => [
-    {
-      source: '/(.*)',
-      headers: [
-        {
-          key: 'X-Content-Type-Options',
-          value: 'nosniff',
+  experimental: {
+    serverComponentsExternalPackages: [],
+  },
+  transpilePackages: ['@agentes/ui-enterprise'],
+  webpack: (config, { dev, isServer }) => {
+    // Optimization for development
+    if (dev && !isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
         },
-        {
-          key: 'X-Frame-Options', 
-          value: 'DENY',
-        },
-        {
-          key: 'X-XSS-Protection',
-          value: '1; mode=block',
-        },
-      ],
-    },
-  ],
+      };
+    }
+    
+    return config;
+  },
 }
 
 module.exports = nextConfig

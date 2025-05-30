@@ -1,0 +1,37 @@
+{
+  "name": "@agentes/ui-enterprise",
+  "version": "1.0.0",
+  "description": "Enterprise UI Components convergência Materio MUI + SaaS Boilerplate",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "@mui/material": "^5.15.0",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/x-charts": "^6.19.0",
+    "@mui/x-data-grid": "^6.19.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "next": "^14.0.0",
+    "framer-motion": "^10.18.0",
+    "react-hook-form": "^7.48.0",
+    "zod": "^3.22.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.56.0"
+  }
+}

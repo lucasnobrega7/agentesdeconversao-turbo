@@ -1,3 +1,5 @@
+'use client'
+
 import { 
   Bot, 
   Plus, 
@@ -9,56 +11,26 @@ import {
   Trash2,
   CheckCircle2,
   AlertCircle,
-  Clock
+  Clock,
+  Loader2
 } from 'lucide-react'
 import Link from 'next/link'
+import { useAgents } from '@/hooks/use-agents'
 
 export default function AgentsPage() {
-  // Mock data - Em produção seria do backend
-  const agents = [
+  const { agents, loading, error } = useAgents()
+
+  // Mock data para exibição quando necessário
+  const mockAgents = [
     {
-      id: 'agent-1',
-      name: 'Vendas WhatsApp',
-      description: 'Agente especializado em vendas através do WhatsApp com foco em conversão',
-      status: 'active',
+      id: 'demo-1',
+      name: 'Demo: Vendas WhatsApp',
+      description: 'Agente de demonstração para vendas via WhatsApp',
       model: 'gpt-4o',
-      conversations: 847,
-      conversionRate: 34.2,
-      lastActive: '2 min atrás',
+      conversations: 0,
+      conversionRate: 0,
+      lastActive: 'Demo',
       avatar: '🤖'
-    },
-    {
-      id: 'agent-2', 
-      name: 'Suporte 24/7',
-      description: 'Atendimento automatizado para suporte técnico e dúvidas frequentes',
-      status: 'active',
-      model: 'claude-3-5-sonnet',
-      conversations: 1203,
-      conversionRate: 28.7,
-      lastActive: '1 min atrás',
-      avatar: '🛠️'
-    },
-    {
-      id: 'agent-3',
-      name: 'Lead Qualifier',
-      description: 'Qualificação automática de leads para equipe comercial',
-      status: 'restarting',
-      model: 'gpt-4o-mini',
-      conversations: 532,
-      conversionRate: 41.8,
-      lastActive: '5 min atrás',
-      avatar: '🎯'
-    },
-    {
-      id: 'agent-4',
-      name: 'Onboarding Assistant',
-      description: 'Guia novos usuários através do processo de onboarding',
-      status: 'inactive',
-      model: 'gemini-1.5-pro',
-      conversations: 234,
-      conversionRate: 52.1,
-      lastActive: '2 horas atrás',
-      avatar: '🚀'
     }
   ]
 
@@ -83,9 +55,40 @@ export default function AgentsPage() {
         return 'bg-red-50 text-red-700 border-red-200'
       case 'restarting':
         return 'bg-yellow-50 text-yellow-700 border-yellow-200'
+      case 'demo':
+        return 'bg-blue-50 text-blue-700 border-blue-200'
       default:
         return 'bg-gray-50 text-gray-700 border-gray-200'
     }
+  }
+
+  const displayAgents = agents.length > 0 ? agents : mockAgents
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="ml-2">Carregando agentes...</span>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+        <div className="flex">
+          <AlertCircle className="h-5 w-5 text-red-600" />
+          <div className="ml-3">
+            <h3 className="text-sm font-medium text-red-800">
+              Erro ao carregar agentes
+            </h3>
+            <div className="mt-2 text-sm text-red-700">
+              {error}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -95,10 +98,13 @@ export default function AgentsPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Meus Agentes</h1>
           <p className="text-muted-foreground">
-            Gerencie seus agentes de IA que geram resultados reais
+            {agents.length > 0 
+              ? `${agents.length} agentes conectados ao backend`
+              : 'Gerencie seus agentes de IA que geram resultados reais'
+            }
           </p>
         </div>
-        <Link href="/dashboard/agents/new">
+        <Link href="/agents/new">
           <button className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
             <Plus className="h-4 w-4" />
             Novo Agente
@@ -109,36 +115,40 @@ export default function AgentsPage() {
       {/* Stats Overview */}
       <div className="grid gap-4 md:grid-cols-4">
         <div className="rounded-lg border bg-card p-4">
-          <div className="text-2xl font-bold text-green-600">4</div>
+          <div className="text-2xl font-bold text-green-600">{agents.length}</div>
           <div className="text-sm text-muted-foreground">Agentes Criados</div>
         </div>
         <div className="rounded-lg border bg-card p-4">
-          <div className="text-2xl font-bold text-blue-600">3</div>
+          <div className="text-2xl font-bold text-blue-600">
+            {agents.filter(agent => agent.status !== 'inactive').length}
+          </div>
           <div className="text-sm text-muted-foreground">Ativos Agora</div>
         </div>
         <div className="rounded-lg border bg-card p-4">
-          <div className="text-2xl font-bold text-purple-600">2,816</div>
-          <div className="text-sm text-muted-foreground">Conversas Hoje</div>
+          <div className="text-2xl font-bold text-purple-600">
+            {agents.length > 0 ? 'Real' : 'Demo'}
+          </div>
+          <div className="text-sm text-muted-foreground">Status Backend</div>
         </div>
         <div className="rounded-lg border bg-card p-4">
-          <div className="text-2xl font-bold text-orange-600">39.2%</div>
-          <div className="text-sm text-muted-foreground">Conversão Média</div>
+          <div className="text-2xl font-bold text-orange-600">✅</div>
+          <div className="text-sm text-muted-foreground">API Integrada</div>
         </div>
       </div>
 
       {/* Agents Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {agents.map((agent) => (
+        {displayAgents.map((agent: any) => (
           <div key={agent.id} className="rounded-lg border bg-card p-6 hover:shadow-md transition-shadow">
             {/* Agent Header */}
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="text-2xl">{agent.avatar}</div>
+                <div className="text-2xl">{agent.avatar || '🤖'}</div>
                 <div>
                   <h3 className="font-semibold">{agent.name}</h3>
-                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs border ${getStatusColor(agent.status)}`}>
-                    {getStatusIcon(agent.status)}
-                    {agent.status}
+                  <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs border ${getStatusColor(agent.status || 'active')}`}>
+                    {getStatusIcon(agent.status || 'active')}
+                    {agent.status || 'active'}
                   </div>
                 </div>
               </div>
@@ -149,43 +159,45 @@ export default function AgentsPage() {
 
             {/* Description */}
             <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-              {agent.description}
+              {agent.description || 'Agente de IA para conversações inteligentes'}
             </p>
 
             {/* Metrics */}
             <div className="space-y-3 mb-4">
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Modelo:</span>
-                <span className="font-medium">{agent.model}</span>
+                <span className="font-medium">{agent.model || 'gpt-4o'}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Conversas:</span>
-                <span className="font-medium">{agent.conversations.toLocaleString()}</span>
+                <span className="text-muted-foreground">ID:</span>
+                <span className="font-medium text-xs font-mono">{agent.id.slice(0, 8)}...</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Conversão:</span>
-                <span className="font-medium text-green-600">{agent.conversionRate}%</span>
+                <span className="text-muted-foreground">Criado:</span>
+                <span className="font-medium">
+                  {agent.created_at ? new Date(agent.created_at).toLocaleDateString() : 'Demo'}
+                </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Última atividade:</span>
-                <span className="font-medium">{agent.lastActive}</span>
+                <span className="text-muted-foreground">Temperatura:</span>
+                <span className="font-medium">{agent.temperature || 0.7}</span>
               </div>
             </div>
 
             {/* Actions */}
             <div className="flex gap-2">
-              <Link href={`/dashboard/agents/${agent.id}/test`} className="flex-1">
+              <Link href={`/agents/${agent.id}/test`} className="flex-1">
                 <button className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
                   <Play className="h-4 w-4" />
                   Testar
                 </button>
               </Link>
-              <Link href={`/dashboard/agents/${agent.id}/analytics`}>
+              <Link href={`/agents/${agent.id}/analytics`}>
                 <button className="inline-flex items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium hover:bg-accent">
                   <BarChart3 className="h-4 w-4" />
                 </button>
               </Link>
-              <Link href={`/dashboard/agents/${agent.id}/edit`}>
+              <Link href={`/agents/${agent.id}/edit`}>
                 <button className="inline-flex items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium hover:bg-accent">
                   <Edit className="h-4 w-4" />
                 </button>
@@ -195,7 +207,7 @@ export default function AgentsPage() {
         ))}
 
         {/* Create New Agent Card */}
-        <Link href="/dashboard/agents/new">
+        <Link href="/agents/new">
           <div className="rounded-lg border-2 border-dashed border-gray-300 p-6 hover:border-primary hover:bg-accent transition-colors cursor-pointer min-h-[320px] flex flex-col items-center justify-center">
             <Bot className="h-12 w-12 text-gray-400 mb-4" />
             <h3 className="font-semibold mb-2">Criar Novo Agente</h3>
