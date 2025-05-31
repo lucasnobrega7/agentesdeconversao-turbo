@@ -1,16 +1,28 @@
-# Ignore other apps and packages
-apps/dashboard/
-packages/
+# NUCLEAR OPTION: Ignore EVERYTHING except what we explicitly need
 
-# Ignore monorepo config files
-pnpm-workspace.yaml
-pnpm-lock.yaml
-turbo.json
+# First, ignore EVERYTHING at root
+/*
 
-# Ignore development artifacts at root
-node_modules/
-.turbo/
-deployment-clean/
+# Then selectively allow ONLY what's needed
+!vercel.json
+!apps/
+apps/*
+!apps/web/
 
-# But keep everything in apps/web
-# (No exclusions for apps/web - let Vercel see everything it needs)
+# Within apps/web, ignore build artifacts and local configs
+apps/web/.next/
+apps/web/node_modules/
+apps/web/.turbo/
+apps/web/.env.local
+apps/web/.env.*.local
+
+# Ignore any workspace-related files that might have sneaked in
+**/*workspace*
+**/pnpm-lock.yaml
+**/.npmrc
+
+# Ignore TypeScript build info
+**/*.tsbuildinfo
+
+# Ignore test coverage
+**/coverage/
