@@ -1,35 +1,16 @@
-# Ignore absolutely everything by default
-*
-
-# Then explicitly include only what we need
-!apps/
-apps/*
-!apps/web/
-!apps/web/**
-
-# But exclude problematic files even from web
-apps/web/node_modules/
-apps/web/.next/
-apps/web/.turbo/
-apps/web/.npmrc
-
-# Make sure no workspace files leak in
-**/pnpm-workspace.yaml
-**/pnpm-lock.yaml
-**/.npmrc
-**/turbo.json
-
-# Exclude all other monorepo packages
+# Ignore other apps and packages
+apps/dashboard/
 packages/
+
+# Ignore monorepo config files
+pnpm-workspace.yaml
+pnpm-lock.yaml
+turbo.json
+
+# Ignore development artifacts at root
+node_modules/
+.turbo/
 deployment-clean/
 
-# Exclude root config files that might confuse Vercel
-/package.json
-/package-lock.json
-/pnpm-lock.yaml
-/yarn.lock
-/.npmrc
-/turbo.json
-
-# Keep vercel.json at root
-!vercel.json
+# But keep everything in apps/web
+# (No exclusions for apps/web - let Vercel see everything it needs)
