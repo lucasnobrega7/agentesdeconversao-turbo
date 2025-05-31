@@ -11,6 +11,11 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
+    "@clerk/nextjs": "^6.11.5",
+    "@clerk/themes": "^2.1.44",
+    "@supabase/supabase-js": "^2.47.20",
+    "@tanstack/react-query": "^5.64.2",
+    "lucide-react": "^0.294.0",
     "next": "^15.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
