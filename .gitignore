@@ -1,336 +1,38 @@
-# =============================================================================
-# .GITIGNORE ENTERPRISE - PORQUE COMMITAR LIXO É COISA DE AMADOR
-# =============================================================================
+# Dependencies
+node_modules
+.pnpm-store
 
-# Sistema operacional - macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
-._*
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-# Sistema operacional - Windows
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-*.stackdump
-[Dd]esktop.ini
-$RECYCLE.BIN/
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-*.lnk
-
-# Sistema operacional - Linux
-*~
-.fuse_hidden*
-.directory
-.Trash-*
-.nfs*
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-*.manifest
-*.spec
-pip-log.txt
-pip-delete-this-directory.txt
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-*.mo
-*.pot
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-instance/
-.webassets-cache
-.scrapy
-docs/_build/
-.pybuilder/
-target/
-.ipynb_checkpoints
-profile_default/
-ipython_config.py
-.pdm.toml
-__pypackages__/
-celerybeat-schedule
-celerybeat.pid
-*.sage.py
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-.spyderproject
-.spyproject
-.ropeproject
-/site
-.mypy_cache/
-.dmypy.json
-dmypy.json
-.pyre/
-.pytype/
-cython_debug/
-
-# Node.js
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-.pnpm-debug.log*
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-pids
-*.pid
-*.seed
-*.pid.lock
-lib-cov
-coverage
-*.lcov
-.nyc_output
-.grunt
-bower_components
-.lock-wscript
-build/Release
-node_modules/
-jspm_packages/
-web_modules/
-*.tsbuildinfo
-.npm
-.eslintcache
-.stylelintcache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-.node_repl_history
-*.tgz
-.yarn-integrity
-.cache
-.parcel-cache
-.next
-out
-.nuxt
-dist
-.cache/
-.vuepress/dist
-.temp
-.docusaurus
-.serverless/
-.fusebox/
-.dynamodb/
-.tern-port
-.vscode-test
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
-
-# Next.js
+# Build output
 .next/
-out/
-.swc/
+dist/
+build/
+.turbo
+
+# Environment variables
+.env
+.env.local
+.env.production.local
+.env.development.local
 
 # Vercel
 .vercel
 
-# Railway
-railway.json
-
-# IDEs
-.idea/
-.vscode/
-*.swp
-*.swo
-*.swn
-*.bak
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-*.sublime-project
-.history
-*.hmap
-*.ipa
-*.xcuserstate
+# Testing
+coverage/
 
 # Logs
-logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-# Banco de dados
-*.db
-*.sqlite
-*.sqlite3
-
-# Ambiente
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env*.local
-
-# Arquivos temporários
-*.tmp
-*.temp
-*.cache
-tmp/
-temp/
-
-# Uploads
-uploads/
-media/
-
-# Secrets - NUNCA COMMITAR
+# OS
+.DS_Store
 *.pem
-*.key
-*.crt
-*.cer
-private_key.pem
-public_key.pem
-id_rsa
-id_rsa.pub
-*.p12
-*.pfx
 
-# Backups
-*.backup
-*.bak
-*.old
-*.orig
+# Debug
+.vscode/
+.idea/
 
-# Build artifacts
-dist/
-build/
-out/
-.output/
-
-# Test coverage
-coverage/
-.coverage/
-*.lcov
-
-# Docker
-docker-compose.override.yml
-.dockerignore
-
-# =============================================================================
-# PROJETO ESPECÍFICO - AGENTES DE CONVERSÃO
-# =============================================================================
-
-# Redis dumps
-dump.rdb
-
-# Vector database
-chroma_db/
-qdrant_storage/
-
-# Agent uploads
-agent_documents/
-knowledge_base/
-
-# Conversation logs (dados sensíveis)
-conversation_logs/
-chat_history/
-
-# Model caches
-model_cache/
-.transformers_cache/
-
-# Analytics exports
-analytics_exports/
-reports/
-
-# WhatsApp session
-.wwebjs_auth/
-whatsapp_session/
-
-# N8N workflows backup
-n8n_backups/
-
-# Prisma
-prisma/migrations/dev/
-
-# =============================================================================
-# NÃO IGNORAR - ARQUIVOS IMPORTANTES
-# =============================================================================
-
-!.gitignore
-!.env.example
-!.eslintrc.json
-!.prettierrc
-!README.md
-!LICENSE
-!package.json
-!package-lock.json
-!pnpm-lock.yaml
-!yarn.lock
-!requirements.txt
-!Pipfile
-!Pipfile.lock
-!pyproject.toml
-!poetry.lock
-!docker-compose.yml
-!Dockerfile
-!.github/
-!docs/
-!public/favicon.ico
+# TypeScript
+*.tsbuildinfo
