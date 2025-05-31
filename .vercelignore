@@ -1,28 +1,32 @@
-# NUCLEAR OPTION: Ignore EVERYTHING except what we explicitly need
-
-# First, ignore EVERYTHING at root
+# Ignore everything at root level except essentials
 /*
-
-# Then selectively allow ONLY what's needed
 !vercel.json
 !apps/
+
+# Within apps, ignore everything except web
 apps/*
 !apps/web/
 
-# Within apps/web, ignore build artifacts and local configs
-apps/web/.next/
-apps/web/node_modules/
-apps/web/.turbo/
+# Within apps/web, ignore only build artifacts and local configs
+apps/web/.next
+apps/web/node_modules
+apps/web/.turbo
 apps/web/.env.local
 apps/web/.env.*.local
+apps/web/*.log
 
-# Ignore any workspace-related files that might have sneaked in
-**/*workspace*
+# Ensure we ignore the problematic dashboard app
+apps/dashboard/
+
+# Ignore all packages that contain workspace references
+packages/
+
+# Ignore monorepo config files
+pnpm-workspace.yaml
+pnpm-lock.yaml
+turbo.json
+.npmrc
+
+# Ignore any files that might contain workspace protocol
 **/pnpm-lock.yaml
 **/.npmrc
-
-# Ignore TypeScript build info
-**/*.tsbuildinfo
-
-# Ignore test coverage
-**/coverage/
