@@ -1,0 +1,19 @@
+# Ignore everything except the web app
+/*
+!/apps/
+/apps/*
+!/apps/web/
+!/vercel.json
+
+# Ignore workspace files
+pnpm-workspace.yaml
+pnpm-lock.yaml
+.npmrc
+
+# Ignore other package.json files that contain workspace references
+/packages/
+/deployment-clean/
+
+# Ignore node_modules at root
+/node_modules/
+/package-lock.json
