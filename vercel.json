@@ -1,13 +1,13 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npm install && npm run build",
-  "outputDirectory": ".next",
-  "installCommand": "npm install --force --legacy-peer-deps",
-  "devCommand": "npm run dev",
+  "buildCommand": "cd apps/web && npm install --force --legacy-peer-deps && npm run build",
+  "outputDirectory": "apps/web/.next",
+  "installCommand": "echo 'Install handled by buildCommand'",
+  "devCommand": "cd apps/web && npm run dev",
   "regions": ["gru1"],
-  "root": "apps/web",
   "cleanUrls": true,
   "trailingSlash": false,
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet .",
   "rewrites": [
     {
       "source": "/api/:path*",
