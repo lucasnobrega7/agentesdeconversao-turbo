@@ -8,6 +8,11 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "ignoreCommand": "git diff HEAD^ HEAD --quiet .",
+  "functions": {
+    "apps/web/pages/api/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "env": {
     "NEXT_PUBLIC_API_URL": "https://api.agentesdeconversao.ai",
     "NEXT_PUBLIC_SUPABASE_URL": "https://faccixlabriqwxkxqprw.supabase.co",
