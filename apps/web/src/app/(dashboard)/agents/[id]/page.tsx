@@ -1,15 +1,16 @@
 interface AgentDetailPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default function AgentDetailPage({ params }: AgentDetailPageProps) {
+export default async function AgentDetailPage({ params }: AgentDetailPageProps) {
+  const { id } = await params;
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold">Agente #{params.id}</h1>
+          <h1 className="text-3xl font-bold">Agente #{id}</h1>
           <p className="text-gray-600 mt-1">Suporte ao Cliente</p>
         </div>
         <div className="flex space-x-3">

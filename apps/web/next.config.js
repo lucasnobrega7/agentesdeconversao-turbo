@@ -11,10 +11,7 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
-  transpilePackages: ['@agentes/ui-enterprise'],
+  serverExternalPackages: [],
   webpack: (config, { dev, isServer }) => {
     // Optimization for development
     if (dev && !isServer) {

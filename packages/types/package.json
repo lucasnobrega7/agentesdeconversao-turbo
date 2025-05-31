@@ -1,0 +1,44 @@
+{
+  "name": "@agentes/types",
+  "version": "1.0.0",
+  "description": "Tipos TypeScript compartilhados para o monorepo Agentes de Conversão",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./database": {
+      "types": "./dist/database.d.ts",
+      "default": "./dist/database.js"
+    },
+    "./api": {
+      "types": "./dist/api.d.ts", 
+      "default": "./dist/api.js"
+    },
+    "./ui": {
+      "types": "./dist/ui.d.ts",
+      "default": "./dist/ui.js"
+    },
+    "./supabase": {
+      "types": "./dist/supabase.d.ts",
+      "default": "./dist/supabase.js"
+    }
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "eslint": "^8.57.0"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  }
+}
