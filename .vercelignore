@@ -1,19 +1,28 @@
-# Ignore workspace config files - eles são o câncer deste deploy
-pnpm-workspace.yaml
-pnpm-lock.yaml
-.npmrc
+# Ignore Python backend
+apps/api/backend/
 
-# Ignore outros apps - um projeto por vez, por favor
+# Ignore other incomplete apps
 apps/dashboard/
+apps/blog/
+apps/docs/
+apps/landing/
+apps/lp/
 
-# Ignore packages com workspace - contaminação cruzada
-packages/
+# Ignore incomplete packages
+packages/components/
+packages/server/
+packages/types/
+packages/middleware/
+packages/ui-enterprise/
+packages/lib/
 
-# Ignore artifacts do root - lixo digital
-node_modules/
-package-lock.json
+# Ignore development files
+scripts/
+deployment/
 deployment-clean/
-.turbo/
+*.sh
 
-# Mas deixe o Vercel ver TODO o apps/web
-# Sem exceções - o Vercel sabe o que fazer com .next e node_modules
+# Keep essential config files for Turborepo
+!turbo.json
+!package.json
+!pnpm-workspace.yaml
