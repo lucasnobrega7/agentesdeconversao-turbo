@@ -1,8 +1,0 @@
-/Users/lucasrnobrega/Claude-outputs/Projetos/materio-mui-nextjs-admin-template-free/typescript-version/src/components/theme
-/Users/lucasrnobrega/Claude-outputs/Projetos/materio-mui-nextjs-admin-template-free/typescript-version/src/configs/themeConfig.ts
-/Users/lucasrnobrega/Claude-outputs/Projetos/materio-mui-nextjs-admin-template-free/typescript-version/src/@core/theme
-/Users/lucasrnobrega/Claude-outputs/Projetos/materio-mui-nextjs-admin-template-free/typescript-version/src/@core/theme/colorSchemes.ts
-/Users/lucasrnobrega/Claude-outputs/Projetos/materio-mui-nextjs-admin-template-free/javascript-version/src/components/theme
-/Users/lucasrnobrega/Claude-outputs/Projetos/materio-mui-nextjs-admin-template-free/javascript-version/src/configs/themeConfig.js
-/Users/lucasrnobrega/Claude-outputs/Projetos/materio-mui-nextjs-admin-template-free/javascript-version/src/@core/theme
-/Users/lucasrnobrega/Claude-outputs/Projetos/materio-mui-nextjs-admin-template-free/javascript-version/src/@core/theme/colorSchemes.js

@@ -1,2 +1,0 @@
-/Users/lucasrnobrega/Claude-outputs/Projetos/saas-boilerplate-main/apps/web/src/app/api/sentry-example-api
-/Users/lucasrnobrega/Claude-outputs/Projetos/saas-boilerplate-main/apps/web/src/app/api/sentry-example-api/route.ts

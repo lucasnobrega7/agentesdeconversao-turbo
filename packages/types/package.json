@@ -1,5 +1,5 @@
 {
-  "name": "@agentes/types",
+  "name": "@repo/types",
   "version": "1.0.0",
   "description": "Tipos TypeScript compartilhados para o monorepo Agentes de Conversão",
   "main": "dist/index.js",

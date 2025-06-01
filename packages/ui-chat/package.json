@@ -1,0 +1,45 @@
+{
+  "name": "@repo/ui-chat",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./widget": {
+      "types": "./dist/widget.d.ts",
+      "import": "./dist/widget.mjs",
+      "require": "./dist/widget.js"
+    },
+    "./widget.min.js": "./dist/widget.global.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "build:widget": "tsup src/widget.ts --format iife --minify --global-name AgentesChat --outDir dist",
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "check-types": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "^19.0.3",
+    "@types/react-dom": "^19.0.1",
+    "eslint": "^8.57.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "framer-motion": "^10.16.5"
+  }
+}

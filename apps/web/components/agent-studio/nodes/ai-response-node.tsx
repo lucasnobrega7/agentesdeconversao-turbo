@@ -1,0 +1,47 @@
+"use client"
+
+import type React from "react"
+import type { NodeProps } from "@xyflow/react"
+import { NodeWrapper, type CustomNodeData } from "./node-wrapper"
+import { Badge } from "@/components/ui/badge"
+
+// Example specific data for AIResponseNode
+export interface AIResponseNodeData extends CustomNodeData {
+  prompt?: string
+  model?: string
+  temperature?: number
+  maxTokens?: number
+}
+
+export const AIResponseNode: React.FC<NodeProps<AIResponseNodeData>> = (props) => {
+  const { data } = props
+  return (
+    <NodeWrapper
+      {...props}
+      title="Resposta IA"
+      iconName="Brain"
+      data={{ ...data, color: data.color || "#8B5CF6" }} // Purple accent for AI
+    >
+      <div className="space-y-2">
+        <p className="text-muted-foreground line-clamp-2">{data.prompt || "Prompt não configurado."}</p>
+        <div className="flex flex-wrap gap-1">
+          {data.model && (
+            <Badge variant="outline" className="text-xs">
+              Modelo: {data.model}
+            </Badge>
+          )}
+          {data.temperature !== undefined && (
+            <Badge variant="outline" className="text-xs">
+              Temp: {data.temperature}
+            </Badge>
+          )}
+          {data.maxTokens !== undefined && (
+            <Badge variant="outline" className="text-xs">
+              Tokens: {data.maxTokens}
+            </Badge>
+          )}
+        </div>
+      </div>
+    </NodeWrapper>
+  )
+}

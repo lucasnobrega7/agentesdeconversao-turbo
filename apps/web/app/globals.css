@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Font Variables */
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+      "Helvetica Neue", sans-serif;
+    --font-mono: "JetBrains Mono", "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    /* Light Mode Semantic Colors */
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 224 71.4% 4.1%; /* #030712 */
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 224 71.4% 4.1%; /* #030712 */
+    --popover: 0 0% 100%; /* #FFFFFF */
+    --popover-foreground: 224 71.4% 4.1%; /* #030712 */
+    --primary: 221 100% 50%; /* #0066FF */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+    --secondary: 220 14.3% 95.9%; /* #F3F4F6 */
+    --secondary-foreground: 222 47.4% 11.2%; /* #111827 */
+    --muted: 220 14.3% 98%; /* #F9FAFB */
+    --muted-foreground: 220 8.9% 46.1%; /* #6B7280 */
+    --accent: 220 14.3% 95.9%; /* #F3F4F6 */
+    --accent-foreground: 222 47.4% 11.2%; /* #111827 */
+    --destructive: 0 84.2% 60.2%; /* #EF4444 */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+    --border: 220 13% 91%; /* #E5E7EB */
+    --input: 220 13% 91%; /* #E5E7EB */
+    --ring: 221 100% 50%; /* #0066FF */
+    --radius: 0.5rem; /* Default radius, can be overridden */
+
+    /* Functional Colors */
+    --green-500: 158 80% 40%; /* #10B981 */
+    --amber-500: 38 92% 50%; /* #F59E0B */
+    --red-500: 0 84% 60%; /* #EF4444 */
+  }
+
+  .dark {
+    /* Dark Mode Semantic Colors */
+    --background: 224 71.4% 4.1%; /* #030712 */
+    --foreground: 220 14.3% 98%; /* #F9FAFB */
+    --card: 222 47.4% 11.2%; /* #111827 */
+    --card-foreground: 220 14.3% 98%; /* #F9FAFB */
+    --popover: 222 47.4% 11.2%; /* #111827 */
+    --popover-foreground: 220 14.3% 98%; /* #F9FAFB */
+    --primary: 217 91.2% 59.8%; /* #3B82F6 */
+    --primary-foreground: 224 71.4% 4.1%; /* #030712 */
+    --secondary: 222 47.4% 16.9%; /* #1F2937 */
+    --secondary-foreground: 220 14.3% 98%; /* #F9FAFB */
+    --muted: 222 47.4% 16.9%; /* #1F2937 */
+    --muted-foreground: 220 10% 62.9%; /* #9CA3AF */
+    --accent: 222 47.4% 16.9%; /* #1F2937 */
+    --accent-foreground: 220 14.3% 98%; /* #F9FAFB */
+    --destructive: 0 72.2% 50.6%; /* #DC2626 */
+    --destructive-foreground: 220 14.3% 98%; /* #F9FAFB */
+    --border: 222 47.4% 16.9%; /* #1F2937 */
+    --input: 222 47.4% 16.9%; /* #1F2937 */
+    --ring: 217 91.2% 59.8%; /* #3B82F6 */
+
+    /* Functional Colors Dark - can be same or adjusted if needed */
+    --green-500: 158 80% 40%;
+    --amber-500: 38 92% 50%;
+    --red-500: 0 72% 51%; /* Using the darker red for destructive */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold;
+  }
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  h3 {
+    @apply text-2xl;
+  }
+  h4 {
+    @apply text-xl;
+  }
+  p {
+    @apply leading-relaxed;
+  }
+}
+
+/* Custom ReactFlow styles to match theme */
+.react-flow__node {
+  @apply bg-card text-card-foreground border-border rounded-lg shadow-md;
+}
+.react-flow__node.selected {
+  @apply ring-2 ring-primary ring-offset-2 ring-offset-background;
+}
+.react-flow__handle {
+  @apply !bg-primary;
+}
+.react-flow__edge-path {
+  @apply stroke-primary;
+}
+.react-flow__controls {
+  @apply bg-card border border-border rounded-lg shadow;
+}
+.react-flow__controls button {
+  @apply bg-card hover:bg-accent text-foreground;
+}
+.react-flow__background {
+  @apply bg-muted/20;
+}
+.react-flow__minimap {
+  @apply bg-card border border-border rounded-md;
+}

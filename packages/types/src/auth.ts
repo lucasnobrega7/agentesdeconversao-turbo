@@ -2,6 +2,24 @@
  * Authentication & Authorization types
  */
 
+// User and Organization interfaces
+export interface User {
+  id: string
+  email: string
+  name?: string
+  avatar_url?: string
+  created_at: string
+  updated_at: string
+}
+
+export interface Organization {
+  id: string
+  name: string
+  slug?: string
+  created_at: string
+  updated_at: string
+}
+
 // User roles
 export type UserRole = 'OWNER' | 'ADMIN' | 'MEMBER' | 'VIEWER'
 

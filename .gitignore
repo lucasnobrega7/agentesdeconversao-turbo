@@ -1,38 +1,117 @@
 # Dependencies
 node_modules
 .pnpm-store
+.yarn/install-state.gz
+.pnp
+.pnp.js
 
 # Build output
 .next/
 dist/
 build/
 .turbo
+.turbopack/
+out/
 
 # Environment variables
 .env
 .env.local
+.env.production
 .env.production.local
+.env.development
 .env.development.local
+.env.staging
+.env.test
+.env*.local
+.env.vault
+*.env
 
 # Vercel
 .vercel
 
 # Testing
 coverage/
+.pytest_cache/
+htmlcov/
+.coverage
+.tox/
 
 # Logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
 # OS
 .DS_Store
+.DS_Store?
+._*
 *.pem
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Debug
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
 # TypeScript
 *.tsbuildinfo
+next-env.d.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Security
+*.key
+*.cert
+*.crt
+secrets/
+credentials/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Uploads
+uploads/
+public/uploads/
+
+# Generated
+generated/
+.generated/
+
+# Backup
+*.backup
+*.bak
+backup/
+
+# Cache
+.cache/
+.parcel-cache/
+.nuxt/
