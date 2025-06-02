@@ -1,4 +1,4 @@
 {
-  "buildCommand": "cd ../.. && pnpm build --filter=web",
-  "outputDirectory": ".next"
+  "buildCommand": "pnpm build --filter=@repo/web",
+  "outputDirectory": "apps/web/.next"
 }

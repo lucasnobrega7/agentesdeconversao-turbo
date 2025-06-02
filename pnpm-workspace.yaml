@@ -1,3 +1,22 @@
+# Enterprise Monorepo Configuration
 packages:
+  # Main applications
   - "apps/*"
+  
+  # Shared packages and libraries
   - "packages/*"
+  
+  # Backend services (optional)
+  - "services/*"
+
+# Workspace configuration
+catalog:
+  # Shared dependencies across workspace
+  react: "^19.0.0"
+  react-dom: "^19.0.0"
+  typescript: "^5.8.3"
+  
+# Performance optimizations
+prefer-workspace-packages: true
+link-workspace-packages: true
+shared-workspace-lockfile: true

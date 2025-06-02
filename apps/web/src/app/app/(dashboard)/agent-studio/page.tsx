@@ -257,4 +257,15 @@ export default function AgentStudioPage() {
                 <CardContent>
                   <div className="space-y-2 text-sm">
                     <div>
-                      <p className\
+                      <p className="text-muted-foreground">Status: {flow.status}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  )
+}

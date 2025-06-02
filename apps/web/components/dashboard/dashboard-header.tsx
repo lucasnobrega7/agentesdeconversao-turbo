@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { UserNav } from "@/components/dashboard/user-nav"
+import { UserNav } from "@/components/v0-dashboard/user-nav"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Button } from "@/components/ui/button"
 import { Search } from "lucide-react"
