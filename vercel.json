@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "pnpm build --filter=@repo/web",
-  "installCommand": "pnpm install",
+  "buildCommand": "npm run build",
+  "installCommand": "npm run install:web",
   "framework": "nextjs",
   "root": "apps/web",
   "outputDirectory": ".next",
