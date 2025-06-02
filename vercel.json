@@ -1,12 +1,19 @@
 {
-  "buildCommand": "pnpm turbo build",
+  "buildCommand": "cd ../.. && pnpm build --filter=web",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "outputDirectory": "apps/web/.next",
+  "root": "apps/web",
+  "outputDirectory": ".next",
   "rewrites": [
     {
       "source": "/api/py/:path*",
       "destination": "https://api.agentesdeconversao.ai/:path*"
     }
-  ]
+  ],
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://api.agentesdeconversao.ai",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://faccixlabriqwxkxqprw.supabase.co",
+    "NEXT_PUBLIC_APP_URL": "https://agentesdeconversao.ai",
+    "NEXT_PUBLIC_DASHBOARD_URL": "https://dash.agentesdeconversao.ai"
+  }
 }
