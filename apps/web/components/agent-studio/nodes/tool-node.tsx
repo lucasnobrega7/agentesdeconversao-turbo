@@ -8,8 +8,8 @@ export interface ToolNodeData extends CustomNodeData {
   inputParams?: Record<string, any>
 }
 
-export const ToolNode: React.FC<NodeProps<ToolNodeData>> = (props) => {
-  const { data } = props
+export const ToolNode = (props: NodeProps) => {
+  const { data } = props as { data: ToolNodeData }
   return (
     <NodeWrapper
       {...props}

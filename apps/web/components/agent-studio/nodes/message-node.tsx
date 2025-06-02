@@ -7,7 +7,7 @@ export interface MessageNodeData extends CustomNodeData {
   channel?: string
 }
 
-export const MessageNode: React.FC<NodeProps<MessageNodeData>> = (props) => {
+export const MessageNode = (props: NodeProps<MessageNodeData>) => {
   const { data } = props
   return (
     <NodeWrapper

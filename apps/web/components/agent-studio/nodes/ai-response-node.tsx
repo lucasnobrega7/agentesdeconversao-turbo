@@ -13,8 +13,8 @@ export interface AIResponseNodeData extends CustomNodeData {
   maxTokens?: number
 }
 
-export const AIResponseNode: React.FC<NodeProps<AIResponseNodeData>> = (props) => {
-  const { data } = props
+export const AIResponseNode = (props: NodeProps) => {
+  const { data } = props as { data: AIResponseNodeData }
   return (
     <NodeWrapper
       {...props}

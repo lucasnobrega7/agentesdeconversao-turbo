@@ -6,8 +6,8 @@ export interface ConditionNodeData extends CustomNodeData {
   condition?: string
 }
 
-export const ConditionNode: React.FC<NodeProps<ConditionNodeData>> = (props) => {
-  const { data } = props
+export const ConditionNode = (props: NodeProps) => {
+  const { data } = props as { data: ConditionNodeData }
   return (
     <NodeWrapper
       {...props}

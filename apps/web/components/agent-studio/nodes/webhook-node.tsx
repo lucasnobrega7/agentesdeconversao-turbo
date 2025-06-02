@@ -3,12 +3,13 @@ import { NodeProps } from "@xyflow/react"
 import { NodeWrapper, type CustomNodeData } from "./node-wrapper"
 import { Input } from "@/components/ui/input"
 
-export const WebhookNode: React.FC<NodeProps<CustomNodeData>> = (props) => {
+export const WebhookNode = (props: NodeProps) => {
+  const { data } = props as { data: CustomNodeData }
   return (
     <NodeWrapper {...props} title="Webhook" iconName="Webhook" hasInputHandle={false}>
       <Input
         placeholder="URL do Webhook"
-        defaultValue={props.data.url || ""}
+        defaultValue={data.url || ""}
         className="text-xs"
         readOnly // Configuration should be in properties panel
       />
