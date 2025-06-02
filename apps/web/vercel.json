@@ -31,6 +31,10 @@
     {
       "source": "/api/py/:path*",
       "destination": "https://api.agentesdeconversao.ai/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://api.agentesdeconversao.ai/:path*"
     }
   ],
   "env": {
