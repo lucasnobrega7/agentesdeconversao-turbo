@@ -91,7 +91,7 @@ export default function AgentStudioPage() {
                     <CardDescription>{flow.description}</CardDescription>
                   </div>
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger>
                       <Button variant="ghost" size="icon">
                         <MoreHorizontal className="h-4 w-4" />
                         <span className="sr-only">Abrir menu</span>
@@ -160,7 +160,7 @@ export default function AgentStudioPage() {
                     <CardDescription>{flow.description}</CardDescription>
                   </div>
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger>
                       <Button variant="ghost" size="icon">
                         <MoreHorizontal className="h-4 w-4" />
                         <span className="sr-only">Abrir menu</span>
@@ -229,7 +229,7 @@ export default function AgentStudioPage() {
                     <CardDescription>{flow.description}</CardDescription>
                   </div>
                   <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger>
                       <Button variant="ghost" size="icon">
                         <MoreHorizontal className="h-4 w-4" />
                         <span className="sr-only">Abrir menu</span>

@@ -209,7 +209,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
             <CardDescription className="text-xs">{String(node.data.label || node.type || "Nó Selecionado")}</CardDescription>
           </div>
           <Popover>
-            <PopoverTrigger asChild>
+            <PopoverTrigger>
               <Button variant="ghost" size="icon" className="h-7 w-7">
                 <Palette className="h-4 w-4" />
               </Button>

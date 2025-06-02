@@ -66,7 +66,7 @@ export function StudioToolbar({ agentId, flowName = "Fluxo Principal" }: StudioT
           <Redo className="mr-0 md:mr-1.5 h-3.5 w-3.5" /> <span className="hidden md:inline">Refazer</span>
         </Button>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <Button variant="ghost" size="sm" className="text-xs px-2">
               <History className="mr-0 md:mr-1.5 h-3.5 w-3.5" /> <span className="hidden md:inline">Versões</span>
             </Button>
@@ -106,7 +106,7 @@ export function StudioToolbar({ agentId, flowName = "Fluxo Principal" }: StudioT
         </Button>
         <Separator orientation="vertical" className="h-6 mx-1 hidden md:block" />
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <Button variant="ghost" size="icon" className="h-8 w-8">
               <Settings className="h-4 w-4" />
               <span className="sr-only">Configurações do Fluxo</span>

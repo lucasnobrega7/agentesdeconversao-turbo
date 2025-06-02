@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback } from 'react'
 import {
   ReactFlow,
   Background,
@@ -13,12 +13,9 @@ import {
   type Edge,
   type Node,
   BackgroundVariant,
-  ReactFlowProvider,
-  useReactFlow,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import { useStudioStore } from '@/stores/studio-store'
-import { useShallow } from 'zustand/react/shallow'
 
 // Custom node types
 import { AgentNode } from './nodes/agent-node'

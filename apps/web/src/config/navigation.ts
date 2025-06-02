@@ -15,7 +15,6 @@ import {
   Building,
   Key,
   CreditCard,
-  Bell,
   Target,
   GitBranch,
   Globe,

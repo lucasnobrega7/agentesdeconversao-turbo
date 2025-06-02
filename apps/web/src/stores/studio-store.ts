@@ -69,9 +69,9 @@ export const useStudioStore = create<RFState>()(
         if (nodeIndex !== -1) {
           // Check if data actually changed to avoid unnecessary snapshots
           if (
-            JSON.stringify(state.nodes[nodeIndex].data) !== JSON.stringify({ ...state.nodes[nodeIndex].data, ...data })
+            JSON.stringify(state.nodes[nodeIndex]?.data) !== JSON.stringify({ ...state.nodes[nodeIndex]?.data, ...data })
           ) {
-            state.nodes[nodeIndex].data = { ...state.nodes[nodeIndex].data, ...data }
+            state.nodes[nodeIndex]!.data = { ...state.nodes[nodeIndex]?.data, ...data }
             changed = true
           }
         }
@@ -115,6 +115,7 @@ export const useStudioStore = create<RFState>()(
         if (state.historyIndex >= 0) {
           const lastSnapshot = state.history[state.historyIndex]
           if (
+            lastSnapshot &&
             JSON.stringify(lastSnapshot.nodes) === JSON.stringify(state.nodes) &&
             JSON.stringify(lastSnapshot.edges) === JSON.stringify(state.edges)
           ) {
@@ -139,9 +140,11 @@ export const useStudioStore = create<RFState>()(
         if (state.historyIndex > 0) {
           state.historyIndex--
           const snapshot = state.history[state.historyIndex]
-          state.nodes = [...snapshot.nodes]
-          state.edges = [...snapshot.edges]
-          state.selectedNodeId = null
+          if (snapshot) {
+            state.nodes = [...snapshot.nodes]
+            state.edges = [...snapshot.edges]
+            state.selectedNodeId = null
+          }
         }
       })
     },
@@ -150,9 +153,11 @@ export const useStudioStore = create<RFState>()(
         if (state.historyIndex < state.history.length - 1) {
           state.historyIndex++
           const snapshot = state.history[state.historyIndex]
-          state.nodes = [...snapshot.nodes]
-          state.edges = [...snapshot.edges]
-          state.selectedNodeId = null
+          if (snapshot) {
+            state.nodes = [...snapshot.nodes]
+            state.edges = [...snapshot.edges]
+            state.selectedNodeId = null
+          }
         }
       })
     },

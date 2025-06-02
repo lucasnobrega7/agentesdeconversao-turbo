@@ -23,21 +23,21 @@ export const AIResponseNode = (props: NodeProps) => {
       iconName="Brain"
     >
       <div className="space-y-2">
-        <p className="text-muted-foreground line-clamp-2">{data.prompt || "Prompt não configurado."}</p>
+        <p className="text-muted-foreground line-clamp-2">{String(data.prompt) || "Prompt não configurado."}</p>
         <div className="flex flex-wrap gap-1">
-          {data.model && (
+          {String(data.model) && (
             <Badge variant="outline" className="text-xs">
-              Modelo: {data.model}
+              Modelo: {String(data.model)}
             </Badge>
           )}
-          {data.temperature !== undefined && (
+          {String(data.temperature !== undefined) && (
             <Badge variant="outline" className="text-xs">
-              Temp: {data.temperature}
+              Temp: {String(data.temperature)}
             </Badge>
           )}
-          {data.maxTokens !== undefined && (
+          {String(data.maxTokens !== undefined) && (
             <Badge variant="outline" className="text-xs">
-              Tokens: {data.maxTokens}
+              Tokens: {String(data.maxTokens)}
             </Badge>
           )}
         </div>

@@ -16,7 +16,7 @@ export const ConditionNode = (props: NodeProps) => {
       iconName="GitFork"
       hasOutputHandle={false}
     >
-      <p className="text-muted-foreground line-clamp-2">{data.condition || "Condição não configurada."}</p>
+      <p className="text-muted-foreground line-clamp-2">{String(data.condition) || "Condição não configurada."}</p>
       <div className="mt-2 flex flex-col space-y-1.5">
         <div className="relative flex items-center justify-end group">
           <span className="mr-2 text-xs text-muted-foreground group-hover:text-green-600">Verdadeiro</span>

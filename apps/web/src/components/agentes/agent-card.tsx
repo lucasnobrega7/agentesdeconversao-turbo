@@ -57,7 +57,7 @@ export function AgentCard({ agent, onEdit, onDelete, onDuplicate }: AgentCardPro
               {statusLabels[agent.status]}
             </Badge>
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button variant="ghost" size="icon" className="h-8 w-8">
                   <MoreVertical className="h-4 w-4" />
                 </Button>
@@ -111,12 +111,12 @@ export function AgentCard({ agent, onEdit, onDelete, onDuplicate }: AgentCardPro
         </div>
       </CardContent>
       <CardFooter className="flex gap-2">
-        <Button variant="outline" size="sm" className="flex-1" asChild>
-          <Link href={`/agents/${agent.id}/test`}>
+        <Link href={`/agents/${agent.id}/test`}>
+          <Button variant="outline" size="sm" className="flex-1">
             Testar
-          </Link>
-        </Button>
-        <Button size="sm" className="flex-1" asChild>
+          </Button>
+        </Link>
+        <Button size="sm" className="flex-1">
           <Link href={`/agent-studio/${agent.id}/flow`}>
             Editar Fluxo
           </Link>

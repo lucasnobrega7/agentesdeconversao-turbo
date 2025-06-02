@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useOrganizations } from "@/hooks/use-organizations"
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -28,7 +28,7 @@ export function OrganizationSwitcher() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger>
         <Button 
           variant="outline" 
           role="combobox" 

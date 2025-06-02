@@ -1,5 +1,5 @@
 import React from "react"
-import { Handle, Position, type NodeProps } from "@xyflow/react"
+import { Handle, Position } from "@xyflow/react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import * as Icons from "lucide-react"
@@ -70,11 +70,11 @@ export const NodeWrapper: React.FC<NodeWrapperProps> = ({
       )}
       <CardHeader className="flex flex-row items-center space-x-2 p-3 bg-muted/30">
         {IconComponent && (
-          <IconComponent className={cn("h-5 w-5", data.color ? `text-[${data.color}]` : "text-primary")} />
+          <IconComponent className={cn("h-5 w-5", data.color ? `text-[${String(data.color)}]` : "text-primary")} />
         )}
         <div className="flex-1">
-          <CardTitle className="text-sm font-semibold">{data.label || title}</CardTitle>
-          {data.description && <CardDescription className="text-xs">{data.description}</CardDescription>}
+          <CardTitle className="text-sm font-semibold">{String(data.label) || title}</CardTitle>
+          {String(data.description) && <CardDescription className="text-xs">{String(data.description)}</CardDescription>}
         </div>
       </CardHeader>
       {children && <CardContent className="p-3 text-xs">{children}</CardContent>}

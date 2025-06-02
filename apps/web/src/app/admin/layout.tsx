@@ -10,7 +10,6 @@ import {
   Settings,
   Database,
   Activity,
-  AlertTriangle,
   Globe,
   Wrench
 } from 'lucide-react'

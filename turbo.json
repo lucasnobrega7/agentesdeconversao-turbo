@@ -1,22 +1,37 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "remoteCache": {
+    "signature": true
+  },
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "env": ["NODE_ENV", "NEXT_PUBLIC_*", "SUPABASE_*", "DATABASE_URL", "OPENROUTER_API_KEY"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**", ".turbo/**"],
+      "env": ["NODE_ENV", "NEXT_PUBLIC_*", "SUPABASE_*", "DATABASE_URL", "OPENROUTER_API_KEY"],
+      "outputLogs": "new-only"
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": ["$TURBO_DEFAULT$", ".eslintrc*", ".eslintignore"],
+      "outputLogs": "errors-only"
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^check-types"],
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig*.json"],
+      "outputLogs": "errors-only"
     },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test:e2e": {
+      "dependsOn": ["build"],
+      "inputs": ["tests/**", "playwright.config.ts", "apps/web/**"],
+      "outputs": ["playwright-report/**", "test-results/**", ".playwright/**"],
+      "env": ["BASE_URL", "TEST_USER_EMAIL", "TEST_USER_PASSWORD"],
+      "outputLogs": "errors-only"
     }
   },
   "globalEnv": [

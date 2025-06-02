@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { RealtimeChannel } from '@supabase/supabase-js'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { createClient } from '@supabase/supabase-js'
+import type { RealtimeChannel } from '@supabase/supabase-js'
 import { useToast } from '@/hooks/use-toast'
 
 export interface Notification {
@@ -20,10 +20,12 @@ export function useNotifications() {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
   const [loading, setLoading] = useState(true)
-  const supabase = createClientComponentClient()
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
   const { toast } = useToast()
-  
-  let channel: RealtimeChannel | null = null
+  const channelRef = useRef<RealtimeChannel | null>(null)
 
   // Demo notifications for fallback
   const demoNotifications: Notification[] = [
@@ -53,7 +55,7 @@ export function useNotifications() {
     },
   ]
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     try {
       setLoading(true)
       const { data: { user } } = await supabase.auth.getUser()
@@ -89,7 +91,7 @@ export function useNotifications() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [supabase, demoNotifications])
 
   const markAsRead = async (notificationId: string) => {
     const notification = notifications.find(n => n.id === notificationId)
@@ -138,7 +140,7 @@ export function useNotifications() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
-    channel = supabase
+    channelRef.current = supabase
       .channel(`notifications:${user.id}`)
       .on(
         'postgres_changes',
@@ -173,11 +175,11 @@ export function useNotifications() {
     subscribeToNotifications()
 
     return () => {
-      if (channel) {
-        supabase.removeChannel(channel)
+      if (channelRef.current) {
+        supabase.removeChannel(channelRef.current)
       }
     }
-  }, [])
+  }, [fetchNotifications, subscribeToNotifications, supabase])
 
   return {
     notifications,

@@ -18,10 +18,10 @@ export const ToolNode = (props: NodeProps) => {
       iconName="TerminalSquare"
     >
       <div className="space-y-1">
-        <p className="font-medium text-foreground">{data.toolName || "Ferramenta não selecionada"}</p>
+        <p className="font-medium text-foreground">{String(data.toolName) || "Ferramenta não selecionada"}</p>
         {data.inputParams && Object.keys(data.inputParams).length > 0 && (
           <div className="flex flex-wrap gap-1">
-            {Object.entries(data.inputParams).map(([key, value]) => (
+            {Object.entries(data.inputParams || {}).map(([key, value]) => (
               <Badge key={key} variant="secondary" className="text-xs">
                 {key}: {String(value).substring(0, 20)}
                 {String(value).length > 20 ? "..." : ""}

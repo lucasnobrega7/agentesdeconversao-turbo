@@ -9,7 +9,7 @@ export const WebhookNode = (props: NodeProps) => {
     <NodeWrapper data={data} selected={props.selected} title="Webhook" iconName="Webhook" hasInputHandle={false}>
       <Input
         placeholder="URL do Webhook"
-        defaultValue={data.url || ""}
+        defaultValue={String(data.url) || ""}
         className="text-xs"
         readOnly // Configuration should be in properties panel
       />

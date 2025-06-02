@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useState, useEffect, useCallback } from 'react'
+import { createClient } from '@supabase/supabase-js'
 
 export interface Organization {
   id: string
@@ -17,13 +17,12 @@ export function useOrganizations() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   
-  const supabase = createClientComponentClient()
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
-  useEffect(() => {
-    fetchOrganizations()
-  }, [])
-
-  const fetchOrganizations = async () => {
+  const fetchOrganizations = useCallback(async () => {
     try {
       setLoading(true)
       
@@ -43,8 +42,8 @@ export function useOrganizations() {
 
       if (membershipError) throw membershipError
 
-      const orgs = memberships?.map(m => m.organizations).filter(Boolean) || []
-      setOrganizations(orgs as Organization[])
+      const orgs = memberships?.map(m => m.organizations).filter(Boolean).flat() || []
+      setOrganizations(orgs)
       
       // Set first organization as current if none selected
       if (orgs.length > 0 && !currentOrganization) {
@@ -56,7 +55,11 @@ export function useOrganizations() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [supabase])
+
+  useEffect(() => {
+    fetchOrganizations()
+  }, [fetchOrganizations])
 
   const switchOrganization = (organizationId: string) => {
     const org = organizations.find(o => o.id === organizationId)

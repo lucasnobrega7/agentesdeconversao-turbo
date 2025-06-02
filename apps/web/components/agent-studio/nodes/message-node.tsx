@@ -16,8 +16,8 @@ export const MessageNode = (props: NodeProps) => {
       title="Enviar Mensagem"
       iconName="MessageSquare"
     >
-      <p className="text-muted-foreground line-clamp-3">{data.message || "Mensagem não configurada."}</p>
-      {data.channel && <p className="mt-1 text-xs text-blue-500">Canal: {data.channel}</p>}
+      <p className="text-muted-foreground line-clamp-3">{String(data.message) || "Mensagem não configurada."}</p>
+      {String(data.channel) && <p className="mt-1 text-xs text-blue-500">Canal: {String(data.channel)}</p>}
     </NodeWrapper>
   )
 }

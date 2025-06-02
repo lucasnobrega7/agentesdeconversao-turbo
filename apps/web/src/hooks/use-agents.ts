@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { apiClient, type Agent } from '@/lib/api'
 
 export function useAgents() {
@@ -119,7 +119,7 @@ export function useAgent(id: string) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchAgent = async () => {
+  const fetchAgent = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
@@ -139,13 +139,13 @@ export function useAgent(id: string) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [id])
 
   useEffect(() => {
     if (id) {
       fetchAgent()
     }
-  }, [id])
+  }, [id, fetchAgent])
 
   return {
     agent,

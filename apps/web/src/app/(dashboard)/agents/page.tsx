@@ -7,8 +7,6 @@ import {
   Play, 
   BarChart3,
   Edit,
-  Copy,
-  Trash2,
   CheckCircle2,
   AlertCircle,
   Clock,

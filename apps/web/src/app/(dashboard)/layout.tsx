@@ -2,9 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { dashboardNavigation, isActiveRoute } from '@/config/navigation'
-import { Zap, Bell, Search, User } from 'lucide-react'
+import { Zap, Search } from 'lucide-react'
 
 import { NavigationSidebar } from '@/components/navigation-sidebar'
 import { ModeToggle } from '@/components/mode-toggle'

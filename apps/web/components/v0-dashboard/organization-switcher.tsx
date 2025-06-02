@@ -24,7 +24,7 @@ export function OrganizationSwitcher() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger>
         <Button variant="outline" role="combobox" aria-expanded={open} className="w-[180px] justify-between">
           {value ? organizations.find((organization) => organization.value === value)?.label : "Selecione..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
