@@ -1,5 +1,5 @@
-import type React from "react"
-import type { NodeProps } from "@xyflow/react"
+import React from "react"
+import { NodeProps } from "@xyflow/react"
 import { NodeWrapper, type CustomNodeData } from "./node-wrapper"
 import { Badge } from "@/components/ui/badge"
 

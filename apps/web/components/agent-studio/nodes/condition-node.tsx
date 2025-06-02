@@ -1,4 +1,4 @@
-import type React from "react"
+import React from "react"
 import { Handle, Position, type NodeProps } from "@xyflow/react"
 import { NodeWrapper, type CustomNodeData } from "./node-wrapper"
 
