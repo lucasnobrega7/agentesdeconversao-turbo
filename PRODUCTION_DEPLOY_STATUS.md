@@ -12,41 +12,39 @@
 ### 🎯 **Current Deployment Challenges**
 
 #### 1. **Vercel Configuration**
-- **Issue:** Network connectivity issues with npm registry during deployment  
-- **Status:** 🔴 **BLOCKING ISSUE**
-- **Root Cause:** ERR_INVALID_THIS errors with URLSearchParams in Vercel build environment
-- **Attempted Solutions:** PNPM → NPM conversion, monorepo configuration fixes
-- **Next Action:** Standalone deployment or infrastructure retry
+- **Issue:** Network connectivity issues with npm registry during CLI deployment  
+- **Status:** ✅ **RESOLVED - GITHUB DEPLOY**
+- **Solution:** GitHub integration deployment configured
+- **Repository:** https://github.com/lucasnobrega7/agentesdeconversao-turbo
+- **Configuration:** Turborepo monorepo setup with proper build commands
 
 #### 2. **Railway Backend**
 - **Status:** ✅ **READY FOR DEPLOY**
 - **Configuration:** Docker + Health checks configured
 - **Environment:** Production variables set
 
-### 🛠️ **Immediate Next Steps**
+### 🛠️ **GitHub Deployment Configuration**
 
-#### Option A: Standalone Frontend Deploy
-```bash
-# Copy web app to new repo for simple deployment
-cp -r apps/web/* ~/agentesdeconversao-frontend/
-cd ~/agentesdeconversao-frontend/
-npm install
-npm run build
-vercel --prod
-```
+#### ✅ **ACTIVE SOLUTION: GitHub Integration**
 
-#### Option B: Manual Vercel Project Setup
-1. Create new Vercel project from `apps/web` directory
-2. Configure build settings:
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `.next`
-   - **Install Command:** `npm install`
-   - **Root Directory:** `apps/web`
+**Repository:** https://github.com/lucasnobrega7/agentesdeconversao-turbo
 
-#### Option C: Continue Current Monorepo
-1. Fix workspace dependency resolution
-2. Configure Vercel for monorepo structure
-3. Deploy with proper root directory setting
+**Vercel Settings:**
+- **Framework:** Next.js  
+- **Root Directory:** `apps/web`
+- **Build Command:** `turbo build --filter=@repo/web`
+- **Output Directory:** `.next`
+- **Install Command:** `pnpm install`
+- **Ignore Command:** `npx turbo-ignore`
+
+**Railway Backend:**
+- **Repository:** Same GitHub repo
+- **Project ID:** fcda25f6-a7e8-4746-bf1e-2d7aa7091137
+- **Status:** ✅ **LINKED TO PROJECT**
+- **Docker:** `services/api/Dockerfile`  
+- **Health Checks:** Configured
+- **Environment:** Production ready
+- **API Path:** `/services/api` (FastAPI application)
 
 ### 🌐 **Production URLs (Ready to Configure)**
 
