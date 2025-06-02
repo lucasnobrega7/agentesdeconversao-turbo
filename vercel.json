@@ -1,19 +1,68 @@
 {
+  "version": 2,
   "buildCommand": "pnpm build --filter=@repo/web",
   "installCommand": "pnpm install",
   "framework": "nextjs",
   "root": "apps/web",
   "outputDirectory": ".next",
+  "regions": ["cle1"],
+  "functions": {
+    "apps/web/src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/py/:path*",
       "destination": "https://api.agentesdeconversao.ai/:path*"
     }
   ],
+  "redirects": [
+    {
+      "source": "/dashboard/:path*",
+      "destination": "https://dash.agentesdeconversao.ai/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/login/:path*",
+      "destination": "https://login.agentesdeconversao.ai/:path*",
+      "permanent": true
+    }
+  ],
   "env": {
     "NEXT_PUBLIC_API_URL": "https://api.agentesdeconversao.ai",
     "NEXT_PUBLIC_SUPABASE_URL": "https://faccixlabriqwxkxqprw.supabase.co",
     "NEXT_PUBLIC_APP_URL": "https://agentesdeconversao.ai",
-    "NEXT_PUBLIC_DASHBOARD_URL": "https://dash.agentesdeconversao.ai"
-  }
+    "NEXT_PUBLIC_DASHBOARD_URL": "https://dash.agentesdeconversao.ai",
+    "NODE_ENV": "production"
+  },
+  "crons": [
+    {
+      "path": "/api/cron/health-check",
+      "schedule": "0 */5 * * * *"
+    }
+  ]
 }
