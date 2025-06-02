@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import { Toaster } from '@/components/ui/sonner'
+import { Toaster } from '@/components/ui/toaster'
 
 // Optimize font loading with Turbopack
 const inter = Inter({ 
@@ -47,9 +47,7 @@ export const metadata: Metadata = {
   },
 }
 
-// Enable Turbopack optimizations
-export const runtime = 'nodejs'
-export const preferredRegion = 'auto'
+// Remove unnecessary exports for production build
 
 export default function RootLayout({
   children,
@@ -66,7 +64,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <Toaster position="bottom-right" richColors />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

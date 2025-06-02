@@ -7,6 +7,10 @@ import { dashboardNavigation, isActiveRoute } from '@/config/navigation'
 import { Zap, Bell, Search, User } from 'lucide-react'
 
 import { NavigationSidebar } from '@/components/navigation-sidebar'
+import { ModeToggle } from '@/components/mode-toggle'
+import { UserNav } from '@/components/dashboard/user-nav'
+import { OrganizationSwitcher } from '@/components/dashboard/organization-switcher'
+import { NotificationsDropdown } from '@/components/dashboard/notifications-dropdown'
 
 export default function DashboardLayout({
   children,
@@ -18,11 +22,12 @@ export default function DashboardLayout({
       {/* Top Bar Enterprise */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
-          <div className="mr-4 flex">
+          <div className="mr-4 flex items-center">
             <Link href="/dashboard" className="mr-6 flex items-center space-x-2">
               <Zap className="h-6 w-6 text-primary" />
               <span className="font-bold">Agentes de Conversão</span>
             </Link>
+            <OrganizationSwitcher />
           </div>
           
           <div className="flex flex-1 items-center justify-between">
@@ -43,17 +48,9 @@ export default function DashboardLayout({
                 dash.agentesdeconversao.ai
               </span>
               
-              <button className="relative p-2 text-muted-foreground hover:text-foreground">
-                <Bell className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
-              </button>
-              
-              <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                  <User className="h-4 w-4 text-primary-foreground" />
-                </div>
-                <span className="text-sm font-medium hidden md:block">Lucas Nóbrega</span>
-              </div>
+              <NotificationsDropdown />
+              <ModeToggle />
+              <UserNav />
             </div>
           </div>
         </div>

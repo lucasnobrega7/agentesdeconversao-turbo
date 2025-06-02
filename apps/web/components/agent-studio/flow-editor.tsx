@@ -46,7 +46,7 @@ export function FlowEditor() {
     }),
   )
 
-  const { project } = useReactFlow()
+  const reactFlowInstance = useReactFlow()
 
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault()
@@ -63,7 +63,7 @@ export function FlowEditor() {
         return
       }
 
-      const position = project({
+      const position = reactFlowInstance.screenToFlowPosition({
         x: event.clientX - reactFlowWrapper.current.getBoundingClientRect().left,
         y: event.clientY - reactFlowWrapper.current.getBoundingClientRect().top,
       })
@@ -76,7 +76,7 @@ export function FlowEditor() {
       }
       addNode(newNode)
     },
-    [project, addNode],
+    [reactFlowInstance, addNode],
   )
 
   const onNodeClick = useCallback(
@@ -109,7 +109,6 @@ export function FlowEditor() {
         <Controls className="!border-border !bg-card !shadow-lg" />
         <MiniMap nodeStrokeWidth={3} zoomable pannable className="!border-border !bg-card" />
         <Background
-          variant="dots"
           gap={16}
           size={1}
           className="!bg-muted/30" // Adjusted from design doc for better visibility
