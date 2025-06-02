@@ -1,6 +1,9 @@
+const path = require('path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@repo/ui", "@repo/ui-enterprise", "@repo/types"],
+  transpilePackages: [],
+  outputFileTracingRoot: path.join(__dirname, '../../'),
   poweredByHeader: false,
   compress: true,
   eslint: {

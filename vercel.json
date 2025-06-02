@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "buildCommand": "pnpm --filter @repo/web build",
+  "buildCommand": "turbo build --filter=@repo/web",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "rootDirectory": "apps/web",
+  "outputDirectory": "apps/web/.next",
+  "ignoreCommand": "npx turbo-ignore",
   "headers": [
     {
       "source": "/(.*)",
