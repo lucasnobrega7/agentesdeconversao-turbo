@@ -69,12 +69,6 @@ importers:
       '@radix-ui/react-toast':
         specifier: 1.2.14
         version: 1.2.14(@types/react-dom@19.1.5(@types/react@19.1.6))(@types/react@19.1.6)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      '@repo/types':
-        specifier: workspace:*
-        version: link:../../packages/types
-      '@repo/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@supabase/auth-helpers-nextjs':
         specifier: 0.10.0
         version: 0.10.0(@supabase/supabase-js@2.49.8)
@@ -103,8 +97,8 @@ importers:
         specifier: 10.1.1
         version: 10.1.1
       lucide-react:
-        specifier: ^0.294.0
-        version: 0.294.0(react@19.1.0)
+        specifier: ^0.460.0
+        version: 0.460.0(react@19.1.0)
       nanoid:
         specifier: 5.1.5
         version: 5.1.5
@@ -142,12 +136,6 @@ importers:
         specifier: ^4.5.7
         version: 4.5.7(@types/react@19.1.6)(immer@10.1.1)(react@19.1.0)
     devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../../packages/eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../../packages/typescript-config
       '@types/node':
         specifier: ^22.10.0
         version: 22.15.29
@@ -2813,15 +2801,15 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lucide-react@0.294.0:
-    resolution: {integrity: sha512-V7o0/VECSGbLHn3/1O67FUgBwWB+hmzshrgDVRJQhMh8uj5D3HBuIvhuAmQTtlupILSplwIZg5FTc4tTKMA2SA==}
-    peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
-
   lucide-react@0.400.0:
     resolution: {integrity: sha512-rpp7pFHh3Xd93KHixNgB0SqThMHpYNzsGUu69UaQbSZ75Q/J3m5t6EhKyMT3m4w2WOxmJ2mY0tD3vebnXqQryQ==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  lucide-react@0.460.0:
+    resolution: {integrity: sha512-BVtq/DykVeIvRTJvRAgCsOwaGL8Un3Bxh8MbDxMhEWlZay3T4IpEKDEpwt5KZ0KJMHzgm6jrltxlT5eXOWXDHg==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
@@ -6293,11 +6281,11 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lucide-react@0.294.0(react@19.1.0):
+  lucide-react@0.400.0(react@19.1.0):
     dependencies:
       react: 19.1.0
 
-  lucide-react@0.400.0(react@19.1.0):
+  lucide-react@0.460.0(react@19.1.0):
     dependencies:
       react: 19.1.0
 

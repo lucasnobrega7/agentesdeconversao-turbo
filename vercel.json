@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "turbo build --filter=@repo/web",
-  "installCommand": "pnpm install",
+  "buildCommand": "cd apps/web && pnpm run build",
+  "installCommand": "pnpm install --shamefully-hoist --legacy-peer-deps",
   "framework": "nextjs",
   "outputDirectory": "apps/web/.next",
   "ignoreCommand": "npx turbo-ignore",
