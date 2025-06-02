@@ -7,14 +7,14 @@ export interface MessageNodeData extends CustomNodeData {
   channel?: string
 }
 
-export const MessageNode = (props: NodeProps<MessageNodeData>) => {
-  const { data } = props
+export const MessageNode = (props: NodeProps) => {
+  const { data } = props as unknown as { data: MessageNodeData }
   return (
     <NodeWrapper
-      {...props}
+      data={{ ...data, color: data.color || "#0EA5E9" }}
+      selected={props.selected}
       title="Enviar Mensagem"
       iconName="MessageSquare"
-      data={{ ...data, color: data.color || "#0EA5E9" }} // Sky accent for Communication
     >
       <p className="text-muted-foreground line-clamp-3">{data.message || "Mensagem não configurada."}</p>
       {data.channel && <p className="mt-1 text-xs text-blue-500">Canal: {data.channel}</p>}

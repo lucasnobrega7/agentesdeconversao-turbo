@@ -7,14 +7,14 @@ export interface ConditionNodeData extends CustomNodeData {
 }
 
 export const ConditionNode = (props: NodeProps) => {
-  const { data } = props as { data: ConditionNodeData }
+  const { data } = props as unknown as { data: ConditionNodeData }
   return (
     <NodeWrapper
-      {...props}
+      data={{ ...data, color: data.color || "#F59E0B" }}
+      selected={props.selected}
       title="Condição"
       iconName="GitFork"
       hasOutputHandle={false}
-      data={{ ...data, color: data.color || "#F59E0B" }} // Amber accent for Logic
     >
       <p className="text-muted-foreground line-clamp-2">{data.condition || "Condição não configurada."}</p>
       <div className="mt-2 flex flex-col space-y-1.5">

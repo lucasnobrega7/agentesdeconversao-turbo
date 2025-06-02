@@ -60,7 +60,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
               <Textarea
                 id={`prompt-${node.id}`}
                 placeholder="Prompt para a IA"
-                value={node.data.prompt || ""}
+                value={String(node.data.prompt || "")}
                 onChange={(e) => handleInputChange("prompt", e.target.value)}
                 className="min-h-[100px] text-xs"
               />
@@ -72,21 +72,21 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
               <Input
                 id={`model-${node.id}`}
                 placeholder="ex: gpt-4o"
-                value={node.data.model || ""}
+                value={String(node.data.model || "")}
                 onChange={(e) => handleInputChange("model", e.target.value)}
                 className="text-xs h-9"
               />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor={`temperature-${node.id}`} className="text-xs">
-                Temperatura ({node.data.temperature || 0.7})
+                Temperatura ({String(node.data.temperature || 0.7)})
               </Label>
               <Slider
                 id={`temperature-${node.id}`}
                 min={0}
                 max={1}
                 step={0.1}
-                defaultValue={[node.data.temperature || 0.7]}
+                defaultValue={[Number(node.data.temperature) || 0.7]}
                 onValueChange={(value) => handleInputChange("temperature", value[0])}
               />
             </div>
@@ -98,7 +98,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
                 id={`maxTokens-${node.id}`}
                 type="number"
                 placeholder="ex: 512"
-                value={node.data.maxTokens || ""}
+                value={String(node.data.maxTokens || "")}
                 onChange={(e) => handleInputChange("maxTokens", Number.parseInt(e.target.value, 10))}
                 className="text-xs h-9"
               />
@@ -114,7 +114,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
             <Textarea
               id={`condition-${node.id}`}
               placeholder="Ex: {{variavel}} === 'valor' && {{outra_variavel}} > 10"
-              value={node.data.condition || ""}
+              value={String(node.data.condition || "")}
               onChange={(e) => handleInputChange("condition", e.target.value)}
               className="min-h-[60px] text-xs font-mono"
             />
@@ -130,7 +130,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
             <Input
               id={`url-${node.id}`}
               placeholder="https://seu.webhook/url"
-              value={node.data.url || ""}
+              value={String(node.data.url || "")}
               onChange={(e) => handleInputChange("url", e.target.value)}
               className="text-xs h-9"
             />
@@ -147,7 +147,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
               <Textarea
                 id={`message-${node.id}`}
                 placeholder="Use {{variavel}} para inserir dados dinâmicos."
-                value={node.data.message || ""}
+                value={String(node.data.message || "")}
                 onChange={(e) => handleInputChange("message", e.target.value)}
                 className="min-h-[100px] text-xs"
               />
@@ -159,7 +159,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
               <Input
                 id={`channel-${node.id}`}
                 placeholder="ex: whatsapp, telegram"
-                value={node.data.channel || ""}
+                value={String(node.data.channel || "")}
                 onChange={(e) => handleInputChange("channel", e.target.value)}
                 className="text-xs h-9"
               />
@@ -176,7 +176,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
               <Input
                 id={`toolName-${node.id}`}
                 placeholder="ex: buscar_cliente_crm"
-                value={node.data.toolName || ""}
+                value={String(node.data.toolName || "")}
                 onChange={(e) => handleInputChange("toolName", e.target.value)}
                 className="text-xs h-9"
               />
@@ -206,7 +206,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
         <div className="flex justify-between items-center">
           <div>
             <CardTitle className="text-sm">Propriedades</CardTitle>
-            <CardDescription className="text-xs">{node.data.label || node.type || "Nó Selecionado"}</CardDescription>
+            <CardDescription className="text-xs">{String(node.data.label || node.type || "Nó Selecionado")}</CardDescription>
           </div>
           <Popover>
             <PopoverTrigger asChild>
@@ -242,7 +242,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
             </Label>
             <Input
               id={`label-${node.id}`}
-              value={node.data.label || ""}
+              value={String(node.data.label || "")}
               onChange={(e) => handleInputChange("label", e.target.value)}
               className="text-xs h-9"
             />
@@ -254,7 +254,7 @@ export function PropertiesPanel({ node }: PropertiesPanelProps) {
             <Textarea
               id={`description-${node.id}`}
               placeholder="Uma breve descrição da função deste nó."
-              value={node.data.description || ""}
+              value={String(node.data.description || "")}
               onChange={(e) => handleInputChange("description", e.target.value)}
               className="min-h-[60px] text-xs"
             />

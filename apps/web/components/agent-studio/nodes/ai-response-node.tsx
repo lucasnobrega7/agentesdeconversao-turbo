@@ -14,13 +14,13 @@ export interface AIResponseNodeData extends CustomNodeData {
 }
 
 export const AIResponseNode = (props: NodeProps) => {
-  const { data } = props as { data: AIResponseNodeData }
+  const { data } = props as unknown as { data: AIResponseNodeData }
   return (
     <NodeWrapper
-      {...props}
+      data={{ ...data, color: data.color || "#8B5CF6" }}
+      selected={props.selected}
       title="Resposta IA"
       iconName="Brain"
-      data={{ ...data, color: data.color || "#8B5CF6" }} // Purple accent for AI
     >
       <div className="space-y-2">
         <p className="text-muted-foreground line-clamp-2">{data.prompt || "Prompt não configurado."}</p>

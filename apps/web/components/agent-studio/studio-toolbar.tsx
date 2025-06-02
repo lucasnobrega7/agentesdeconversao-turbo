@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useStudioStore } from "@/stores/studio-store"
 import { Play, Undo, Redo, Settings, History, UploadCloud, DownloadCloud } from "lucide-react"
-import { toast } from "@/components/ui/use-toast"
+import { toast } from "@/hooks/use-toast"
 import {
   DropdownMenu,
   DropdownMenuContent,

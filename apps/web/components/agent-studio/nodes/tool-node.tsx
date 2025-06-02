@@ -9,13 +9,13 @@ export interface ToolNodeData extends CustomNodeData {
 }
 
 export const ToolNode = (props: NodeProps) => {
-  const { data } = props as { data: ToolNodeData }
+  const { data } = props as unknown as { data: ToolNodeData }
   return (
     <NodeWrapper
-      {...props}
+      data={{ ...data, color: data.color || "#10B981" }}
+      selected={props.selected}
       title="Executar Ferramenta"
       iconName="TerminalSquare"
-      data={{ ...data, color: data.color || "#10B981" }} // Green accent for Tools
     >
       <div className="space-y-1">
         <p className="font-medium text-foreground">{data.toolName || "Ferramenta não selecionada"}</p>

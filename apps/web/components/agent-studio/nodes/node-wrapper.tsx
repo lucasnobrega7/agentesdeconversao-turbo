@@ -13,7 +13,9 @@ export interface CustomNodeData {
   [key: string]: any
 }
 
-interface NodeWrapperProps extends NodeProps<CustomNodeData> {
+interface NodeWrapperProps {
+  data: CustomNodeData
+  selected?: boolean
   title: string
   iconName?: keyof typeof Icons
   children?: React.ReactNode
@@ -36,7 +38,7 @@ export const NodeWrapper: React.FC<NodeWrapperProps> = ({
   outputHandleId = "b",
   footerContent,
 }) => {
-  const IconComponent = iconName ? Icons[iconName] : null
+  const IconComponent = iconName ? Icons[iconName] as React.ComponentType<{ className?: string }> : null
   const statusColor =
     data.status === "running"
       ? "border-blue-500"
