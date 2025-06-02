@@ -1,34 +1,53 @@
-# Core
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-pydantic==2.5.0
-pydantic-settings==2.1.0
+# Core API Framework
+fastapi==0.115.12
+starlette==0.46.2
+uvicorn==0.27.1
+pydantic==2.11.5
+pydantic-settings==2.3.4
 
-# Database
-prisma==0.11.0
-asyncpg==0.29.0
-
-# Auth & Security
+# Authentication & Security
+python-jose[cryptography]==3.5.0
+python-multipart==0.0.20
 passlib[bcrypt]==1.7.4
-python-jose[cryptography]==3.3.0
-python-multipart==0.0.6
-supabase==2.2.0
+bcrypt==4.1.3
 
-# Redis
-redis==5.0.1
+# Database & ORM
+asyncpg==0.30.0
+sqlalchemy==2.0.39
+alembic==1.13.1
+supabase==2.3.4
 
-# AI & Embeddings
-openai==1.3.5
-tiktoken==0.5.1
-langchain==0.0.340
+# HTTP Client & Requests
+httpx==0.27.0
+requests==2.32.3
+aiohttp==3.10.1
 
-# Utils
-python-dotenv==1.0.0
-httpx>=0.24.0,<0.25.0  # AJUSTADO PARA FUNCIONAR, PORRA!
-tenacity==8.2.3
+# AI & LLM Integration
+openai==1.75.0
+langchain==0.3.25
+langchain-core==0.3.59
+langchain-openai==0.3.15
+tiktoken==0.9.0
 
-# Development
+# Text Processing & Utilities
+python-dotenv==1.1.0
+email-validator==2.1.0
+click==8.1.8
+colorama==0.4.6
+
+# Development & Code Quality
+black==25.1.0
 pytest==7.4.3
 pytest-asyncio==0.21.1
-black==23.11.0
-flake8==6.1.0
+
+# Production & Monitoring
+gunicorn==21.2.0
+prometheus-client==0.21.0
+
+# Compatibility fixes
+anyio==4.6.0
+h11==0.14.0
+typing-extensions==4.13.2
+annotated-types==0.6.0
+pydantic-core==2.33.2
+tenacity==9.0.0
