@@ -37,7 +37,7 @@ export function StudioSidebar() {
               </div>
               <div className="space-y-1.5">
                 {category.nodes.map((node) => {
-                  const IconComponent = (node.icon ? Icons[node.icon as keyof typeof Icons] : Icons.BoxSelect) as React.ComponentType<{ className?: string }>
+                  const IconComponent = (node.icon && (node.icon in Icons) ? (Icons as any)[node.icon] : Icons.BoxSelect) as React.ComponentType<{ className?: string }>
                   return (
                     <div
                       key={node.type}
