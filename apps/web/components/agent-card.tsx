@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Bot, MoreVertical, Activity, MessageSquare, TrendingUp } from "lucide-react"
 import Link from "next/link"
-import { motion } from "motion/react"
 
 interface AgentCardProps {
   agent: {
@@ -38,23 +37,12 @@ export function AgentCard({ agent, onEdit, onDelete, onDuplicate }: AgentCardPro
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-    >
-      <Card className="group relative hover:shadow-lg transition-shadow cursor-pointer">
-        <CardHeader>
+    <Card className="group relative hover:shadow-lg transition-shadow">
+      <CardHeader>
         <div className="flex items-start justify-between">
           <div className="space-y-1">
             <CardTitle className="flex items-center gap-2">
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.6 }}
-              >
-                <Bot className="h-5 w-5 text-primary" />
-              </motion.div>
+              <Bot className="h-5 w-5 text-primary" />
               {agent.name}
             </CardTitle>
             <CardDescription className="line-clamp-2">
@@ -133,8 +121,7 @@ export function AgentCard({ agent, onEdit, onDelete, onDuplicate }: AgentCardPro
             Editar Fluxo
           </Link>
         </Button>
-        </CardFooter>
-      </Card>
-    </motion.div>
+      </CardFooter>
+    </Card>
   )
 }
