@@ -11,15 +11,17 @@ export default defineConfig({
     'react', 
     'react-dom',
     'reactflow',
-    '@monaco-editor/react'
+    '@monaco-editor/react',
+    'lucide-react'
   ],
   banner: {
     js: '"use client"'
   },
   esbuildOptions(options) {
-    // Otimizações para React Flow
-    options.define = {
-      'process.env.NODE_ENV': '"production"'
-    }
+    options.jsx = 'automatic'
+    options.jsxImportSource = 'react'
+    options.target = 'es2020'
+    options.platform = 'browser'
+    return options
   }
 })

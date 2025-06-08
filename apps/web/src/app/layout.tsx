@@ -15,7 +15,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Agentes de Conversão - IA Conversacional Enterprise',
   description: 'Plataforma enterprise de inteligência artificial conversacional para comunicação omnichannel e automação de processos de negócio.',
-  metadataBase: new URL('https://agentesdeconversao.ai'),
+  // metadataBase: new URL('https://agentesdeconversao.ai'), // Disabled for development
   openGraph: {
     type: 'website',
     locale: 'pt_BR',

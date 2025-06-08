@@ -1,120 +1,83 @@
-/**
- * Authentication & Authorization types
- */
+// Authentication related types
 
-// User and Organization interfaces
 export interface User {
-  id: string
-  email: string
-  name?: string
-  avatar_url?: string
-  created_at: string
-  updated_at: string
+  id: string;
+  email: string;
+  name?: string;
+  avatarUrl?: string;
+  provider: AuthProvider;
+  organizationId?: string;
+  emailVerified: boolean;
+  tier: UserTier;
+  lifetimeValue: number;
+  metadata?: Record<string, any>;
+  createdAt: Date;
+  updatedAt: Date;
+  lastLoginAt?: Date;
 }
 
-export interface Organization {
-  id: string
-  name: string
-  slug?: string
-  created_at: string
-  updated_at: string
+export enum AuthProvider {
+  EMAIL = 'email',
+  GOOGLE = 'google',
+  GITHUB = 'github',
+  SAML = 'saml'
 }
 
-// User roles
-export type UserRole = 'OWNER' | 'ADMIN' | 'MEMBER' | 'VIEWER'
-
-// Auth state
-export interface AuthState {
-  user: User | null
-  session: Session | null
-  loading: boolean
-  error: string | null
+export enum UserTier {
+  STANDARD = 'standard',
+  VIP = 'vip',
+  ENTERPRISE = 'enterprise'
 }
 
 export interface Session {
-  access_token: string
-  refresh_token: string
-  expires_at: number
-  user: User
+  id: string;
+  userId: string;
+  token: string;
+  refreshToken?: string;
+  expiresAt: Date;
+  userAgent?: string;
+  ipAddress?: string;
+  createdAt: Date;
 }
 
-// Login/Register
+export interface AuthTokens {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+  tokenType: string;
+}
+
+export interface JWTPayload {
+  sub: string;
+  email: string;
+  organizationId: string;
+  role: string;
+  permissions: string[];
+  iat: number;
+  exp: number;
+}
+
 export interface LoginRequest {
-  email: string
-  password: string
-  remember?: boolean
+  email: string;
+  password: string;
 }
 
 export interface RegisterRequest {
-  email: string
-  password: string
-  name?: string
-  organization_name?: string
+  email: string;
+  password: string;
+  name?: string;
+  organizationName?: string;
 }
 
-export interface AuthResponse {
-  user: User
-  session: Session
-  organization?: Organization
+export interface GoogleAuthRequest {
+  idToken: string;
 }
 
-// Password reset
-export interface ForgotPasswordRequest {
-  email: string
+export interface PasswordResetRequest {
+  email: string;
 }
 
-export interface ResetPasswordRequest {
-  token: string
-  password: string
-}
-
-// Organization membership
-export interface Membership {
-  id: string
-  user_id: string
-  organization_id: string
-  role: UserRole
-  status: 'pending' | 'active' | 'suspended'
-  invited_email?: string
-  invited_token?: string
-  created_at: string
-  updated_at: string
-}
-
-export interface InviteUserRequest {
-  email: string
-  role: UserRole
-  organization_id: string
-}
-
-// Permissions
-export type Permission = 
-  | 'agents:read'
-  | 'agents:write'
-  | 'agents:delete'
-  | 'conversations:read'
-  | 'conversations:write'
-  | 'conversations:delete'
-  | 'analytics:read'
-  | 'billing:read'
-  | 'billing:write'
-  | 'organization:read'
-  | 'organization:write'
-  | 'users:read'
-  | 'users:write'
-  | 'users:invite'
-
-export interface RolePermissions {
-  [key: string]: Permission[]
-}
-
-// JWT Claims
-export interface JWTClaims {
-  sub: string // user_id
-  email: string
-  role: string
-  organization_id?: string
-  permissions?: Permission[]
-  iat: number
-  exp: number
+export interface PasswordResetConfirm {
+  token: string;
+  newPassword: string;
 }

@@ -32,10 +32,12 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
+    "@monaco-editor/react": "^4.6.0",
     "@repo/types": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "@xyflow/react": "12.6.4",
+    "lucide-react": "^0.513.0",
     "reactflow": "^11.11.0",
-    "zustand": "^4.5.0",
-    "@monaco-editor/react": "^4.6.0"
+    "zustand": "^4.5.0"
   }
 }

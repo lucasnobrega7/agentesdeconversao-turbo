@@ -16,7 +16,7 @@ export default defineConfig([
   },
   // Configuração para widget embeddable
   {
-    entry: ['src/widget.ts'],
+    entry: ['src/widget.tsx'],
     format: ['iife'],
     globalName: 'AgentesChat',
     minify: true,

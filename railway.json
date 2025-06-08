@@ -1,0 +1,28 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  },
+  "services": {
+    "api": {
+      "source": {
+        "repo": "agentesdeconversao",
+        "branch": "main"
+      },
+      "root": "services/api",
+      "buildCommand": "pip install -r requirements.txt",
+      "startCommand": "uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 4",
+      "envVars": {
+        "ENVIRONMENT": "production",
+        "DEBUG": "false"
+      }
+    }
+  }
+}

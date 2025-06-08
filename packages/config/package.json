@@ -1,0 +1,13 @@
+{
+  "name": "@repo/config",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./vercel": "./src/vercel.ts",
+    "./railway": "./src/railway.ts",
+    "./shared": "./src/shared.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

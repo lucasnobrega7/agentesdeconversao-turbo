@@ -1,77 +1,81 @@
-# Agentes de Conversão - Monorepo
+# Agentes de Conversão
 
-Plataforma enterprise de IA conversacional para automatizar vendas, atendimento ao cliente e conversões.
+> Plataforma SaaS para criação de agentes AI capazes de realizar atendimentos e vendas humanizadas via WhatsApp.
 
-## 🏗️ Estrutura do Monorepo
-
-```
-packages/
-├── ui/                      # Compiled - Design System (shadcn/ui)
-├── ui-chat/                 # Compiled - Widget embeddable otimizado
-├── agent-studio/            # Compiled - Editor visual (React Flow)
-├── analytics-components/    # Compiled - Componentes de visualização
-├── types/                   # JIT - TypeScript types compartilhados
-├── utils/                   # JIT - Funções utilitárias
-├── config/                  # JIT - Configurações compartilhadas
-└── design-tokens/           # JIT - Tokens de design
-
-apps/
-├── web/                     # App principal (Next.js 15.3.3)
-├── lp/                      # Landing page (em breve)
-├── docs/                    # Documentação (em breve)
-└── api/                     # Backend FastAPI (em breve)
-```
-
-## 📦 Estratégia de Pacotes
-
-### Compiled Packages
-- **@repo/ui** - Sistema de design compartilhado
-- **@repo/ui-chat** - Widget de chat otimizado para embed
-- **@repo/agent-studio** - Editor visual de fluxos
-- **@repo/analytics-components** - Dashboards e gráficos
-
-### Just-in-Time Packages
-- **@repo/types** - TypeScript types
-- **@repo/utils** - Funções utilitárias
-- **@repo/design-tokens** - Cores, espaçamentos, etc
-- **@repo/config** - ESLint, TypeScript configs
+[![Deploy](https://github.com/[user]/agentesdeconversao/actions/workflows/deploy.yml/badge.svg)](https://github.com/[user]/agentesdeconversao/actions/workflows/deploy.yml)
+[![CI](https://github.com/[user]/agentesdeconversao/actions/workflows/ci.yml/badge.svg)](https://github.com/[user]/agentesdeconversao/actions/workflows/ci.yml)
 
 ## 🚀 Quick Start
 
 ```bash
-# Instalar dependências
+# Clone o repositório
+git clone https://github.com/[user]/agentesdeconversao.git
+cd agentesdeconversao
+
+# Instale as dependências
 pnpm install
 
-# Desenvolvimento
+# Configure as variáveis de ambiente
+cp .env.example .env.local
+
+# Inicie o desenvolvimento
 pnpm dev
-
-# Build
-pnpm build
-
-# Type check
-pnpm check-types
 ```
 
-## 🛠️ Stack
+## 📦 Stack Tecnológica
 
-- **React 19** + **Next.js 15.3.3**
-- **TypeScript 5.8.3**
-- **Turbopack** para builds rápidos
-- **Tailwind CSS** + **shadcn/ui**
-- **Supabase** para backend
-- **React Flow** para editor visual
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Backend**: FastAPI, Python 3.11, Pydantic v2
+- **Database**: Supabase (PostgreSQL + Auth + Realtime)
+- **AI**: LiteLLM Gateway (OpenAI, Anthropic, Google)
+- **Infra**: Docker, Railway, Vercel, GitHub Actions
 
-## 📊 Benefícios da Arquitetura
+## 🏗️ Arquitetura
 
-1. **Performance**: Compiled packages são otimizados e cacheados
-2. **DX**: JIT packages permitem desenvolvimento rápido
-3. **Escalabilidade**: Cada subdomínio pode ter seu próprio app
-4. **Manutenibilidade**: Boundaries claros entre domínios
-5. **Type Safety**: TypeScript em todo lugar
+```
+agentesdeconversao/
+├── apps/
+│   └── web/          # Frontend Next.js
+├── services/
+│   └── api/          # Backend FastAPI
+├── packages/         # Pacotes compartilhados
+└── config/          # Configurações globais
+```
 
-## 🎯 Próximos Passos
+## 🚀 Deploy
 
-1. Implementar apps para cada subdomínio
-2. Configurar CI/CD com Turbo Remote Caching
-3. Adicionar testes E2E com Playwright
-4. Documentação com Nextra
+### Automático (CI/CD)
+
+Commits na branch `main` disparam deploy automático via GitHub Actions.
+
+### Manual
+
+```bash
+# Deploy completo
+./deploy-production.sh
+
+# Ou individualmente:
+# Backend (Railway)
+cd services/api && railway up
+
+# Frontend (Vercel)
+cd apps/web && vercel --prod
+```
+
+## 📚 Documentação
+
+- [Arquitetura](./ARQUITETURA.md)
+- [Guia de Deploy](./DEPLOY_CONFIG.md)
+- [Desenvolvimento](./CLAUDE.md)
+
+## 🤝 Contribuindo
+
+1. Fork o projeto
+2. Crie sua feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto é proprietário e confidencial.

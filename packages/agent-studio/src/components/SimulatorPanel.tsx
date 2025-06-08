@@ -69,7 +69,7 @@ export function SimulatorPanel({ flow, onClose }: SimulatorPanelProps) {
                 </button>
               </div>
             ) : (
-              messages.map((message, index) => (
+              messages.map((message: any, index: number) => (
                 <div
                   key={index}
                   className={`flex ${

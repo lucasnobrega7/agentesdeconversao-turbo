@@ -55,12 +55,12 @@ export default function AgentsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Agentes</h1>
           <p className="text-muted-foreground">Gerencie seus agentes de conversão.</p>
         </div>
-        <Link href="/agents/new">
-          <Button>
+        <Button asChild>
+          <Link href="/agents/new">
             <Plus className="mr-2 h-4 w-4" />
             Novo Agente
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </div>
       <Tabs defaultValue="all" className="space-y-4">
         <TabsList>
@@ -81,7 +81,7 @@ export default function AgentsPage() {
                     <CardDescription>{agent.description}</CardDescription>
                   </div>
                   <DropdownMenu>
-                    <DropdownMenuTrigger>
+                    <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="icon">
                         <MoreHorizontal className="h-4 w-4" />
                         <span className="sr-only">Abrir menu</span>
@@ -123,9 +123,9 @@ export default function AgentsPage() {
                     <Button variant="outline" size="sm">
                       Testar
                     </Button>
-                    <Link href={`/agents/${agent.id}`}>
-                      <Button size="sm">Gerenciar</Button>
-                    </Link>
+                    <Button asChild size="sm">
+                      <Link href={`/agents/${agent.id}`}>Gerenciar</Link>
+                    </Button>
                   </div>
                 </CardFooter>
               </Card>
@@ -147,7 +147,7 @@ export default function AgentsPage() {
                       <CardDescription>{agent.description}</CardDescription>
                     </div>
                     <DropdownMenu>
-                      <DropdownMenuTrigger>
+                      <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon">
                           <MoreHorizontal className="h-4 w-4" />
                           <span className="sr-only">Abrir menu</span>
@@ -189,9 +189,9 @@ export default function AgentsPage() {
                       <Button variant="outline" size="sm">
                         Testar
                       </Button>
-                      <Link href={`/agents/${agent.id}`}>
-                        <Button size="sm">Gerenciar</Button>
-                      </Link>
+                      <Button asChild size="sm">
+                      <Link href={`/agents/${agent.id}`}>Gerenciar</Link>
+                      </Button>
                     </div>
                   </CardFooter>
                 </Card>
@@ -213,7 +213,7 @@ export default function AgentsPage() {
                       <CardDescription>{agent.description}</CardDescription>
                     </div>
                     <DropdownMenu>
-                      <DropdownMenuTrigger>
+                      <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon">
                           <MoreHorizontal className="h-4 w-4" />
                           <span className="sr-only">Abrir menu</span>
@@ -255,9 +255,9 @@ export default function AgentsPage() {
                       <Button variant="outline" size="sm">
                         Testar
                       </Button>
-                      <Link href={`/agents/${agent.id}`}>
-                        <Button size="sm">Gerenciar</Button>
-                      </Link>
+                      <Button asChild size="sm">
+                      <Link href={`/agents/${agent.id}`}>Gerenciar</Link>
+                      </Button>
                     </div>
                   </CardFooter>
                 </Card>

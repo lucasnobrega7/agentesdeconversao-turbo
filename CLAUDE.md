@@ -1,3 +1,111 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## 🚀 Essential Development Commands
+
+### Quick Start
+```bash
+# Install dependencies
+pnpm install
+
+# Start development (frontend + backend)
+pnpm dev                    # Runs all apps via Turbo
+pnpm dev:web               # Frontend only (port 3000)
+
+# Build project
+pnpm build                 # Build all packages
+pnpm build:turbo          # Build with Turbo
+```
+
+### Backend API (FastAPI)
+```bash
+cd services/api
+python app/main.py         # Start API server (port 8000)
+```
+
+### Code Quality
+```bash
+pnpm lint                  # Lint all packages
+pnpm check-types          # TypeScript type checking
+pnpm format               # Format code with Prettier
+```
+
+### Testing
+```bash
+pnpm test:e2e             # Playwright E2E tests
+pnpm test:e2e:ui          # Playwright UI mode
+pnpm test:e2e:debug       # Debug mode
+```
+
+### Supabase (when needed)
+```bash
+supabase gen types typescript --linked > types/database.ts
+supabase status
+supabase link --project-ref faccixlabriqwxkxqprw
+```
+
+## 🏗️ Architecture Overview
+
+### Monorepo Structure
+This is a **Turborepo monorepo** with the following organization:
+
+```
+agentesdeconversao/
+├── apps/
+│   └── web/           # Next.js 15 main application (port 3000)
+├── services/
+│   └── api/           # FastAPI backend (port 8000)
+├── packages/          # Shared packages (future)
+├── components/        # Shared UI components
+└── scripts/           # Development scripts
+```
+
+### Technology Stack
+- **Frontend**: Next.js 15.3.3 + React 19 + TypeScript + Tailwind CSS + shadcn/ui
+- **Backend**: FastAPI + Pydantic V2 + Supabase
+- **Database**: Supabase (PostgreSQL + Real-time + Auth)
+- **Build System**: Turbo + pnpm workspaces
+- **AI Integration**: OpenRouter, OpenAI, Anthropic APIs
+
+### Key Architecture Patterns
+
+#### Frontend (apps/web/)
+- **App Router**: Using Next.js 15 App Router with route groups
+- **Route Groups**: `(auth)`, `(dashboard)`, `(landing)`, `(public)`
+- **API Client**: Centralized in `src/lib/api.ts` using fetch with TypeScript types
+- **State Management**: Zustand for global state, React Query for server state
+- **Authentication**: Supabase Auth with JWT tokens
+
+#### Backend (services/api/)
+- **Modular Router Structure**: Organized by feature in `app/api/v1/`
+- **Configuration**: Centralized in `app/core/config.py` using Pydantic Settings
+- **Database**: Supabase with enterprise schema (multi-tenant with organizations)
+- **CORS**: Configured for multiple frontend domains
+- **Security**: TrustedHostMiddleware, JWT validation
+
+#### Database Schema (Supabase)
+- **Multi-tenant**: Organization-based with Row Level Security (RLS)
+- **Core Entities**: users, organizations, agents, conversations, messages
+- **Analytics**: Comprehensive tracking with usage, analytics, and API usage tables
+- **AI Models**: Support for 7 different AI models (GPT-4, Claude-3, etc.)
+
+### Development Workflow
+
+1. **Start Development**: `pnpm dev` runs both frontend and backend
+2. **API Documentation**: Available at `http://localhost:8000/docs`
+3. **Frontend**: Available at `http://localhost:3000`
+4. **Hot Reload**: Enabled for both frontend (Turbopack) and backend (uvicorn)
+
+### Important File Locations
+
+- **API Routes**: `services/api/app/api/v1/`
+- **Frontend Pages**: `apps/web/src/app/`
+- **Shared Components**: `components/`
+- **Database Schema**: `services/api/supabase/complete-schema.sql`
+- **Environment Config**: `services/api/app/core/config.py`
+- **API Client**: `apps/web/src/lib/api.ts`
+
 # 🏆 PROJETO AGENTES DE CONVERSÃO
 ### 🏗️ ARQUITETURA ENTERPRISE - STATUS REVOLUCIONÁRIO
 

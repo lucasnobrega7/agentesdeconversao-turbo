@@ -1,59 +1,69 @@
 # Dependencies
-node_modules/
-.pnpm-store/
-.yarn/
-.pnp/
+node_modules
+.pnp
 .pnp.js
 
-# Build output  
-.next/
-dist/
-build/
-.turbo/
-.turbopack/
-out/
-
-# Environment variables
-.env*
-!.env.example
-
-# Platform configs
-.vercel/
-
 # Testing
-coverage/
-.pytest_cache/
-htmlcov/
-.coverage
+coverage
+.nyc_output
 
-# Logs
-logs/
-*.log
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Production
+*.local
+
+# Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# OS generated
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo
+
+# OS
 .DS_Store
-._*
 *.pem
-.Trashes
-Thumbs.db
 
 # IDEs
-.vscode/
-.idea/
+.vscode/*
+!.vscode/extensions.json
+.idea
 *.swp
 *.swo
-
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
 
 # Python
 __pycache__/
 *.py[cod]
-env/
+*$py.class
+*.so
+.Python
 venv/
-.vercel
+.venv/
+ENV/
+
+# Railway
+.railway/
+
+# Misc
+*.log
+.cache
+.temp
+.tmp
+# Secrets
+.env.vault
+.claude/*.json

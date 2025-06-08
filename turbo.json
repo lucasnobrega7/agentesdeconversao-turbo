@@ -1,16 +1,37 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
+  "envMode": "strict",
   "remoteCache": {
     "signature": true
   },
+  "globalEnv": [
+    "NODE_ENV",
+    "CI",
+    "VERCEL_ENV",
+    "VERCEL_URL",
+    "PORT"
+  ],
+  "globalPassThroughEnv": [
+    "VERCEL_*",
+    "RAILWAY_*",
+    "GITHUB_*"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**", ".turbo/**"],
-      "env": ["NODE_ENV", "NEXT_PUBLIC_*", "SUPABASE_*", "DATABASE_URL", "OPENROUTER_API_KEY"],
-      "outputLogs": "new-only"
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"],
+      "env": [
+        "NEXT_PUBLIC_*",
+        "SUPABASE_*",
+        "DATABASE_URL"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "inputs": ["$TURBO_DEFAULT$", ".env*"]
     },
     "lint": {
       "dependsOn": ["^lint"],
@@ -22,22 +43,20 @@
       "inputs": ["$TURBO_DEFAULT$", "tsconfig*.json"],
       "outputLogs": "errors-only"
     },
-    "dev": {
-      "cache": false,
-      "persistent": true
+    "test": {
+      "dependsOn": ["build"],
+      "inputs": ["$TURBO_DEFAULT$", "tests/**", ".env.test*"],
+      "outputLogs": "errors-only"
     },
     "test:e2e": {
       "dependsOn": ["build"],
-      "inputs": ["tests/**", "playwright.config.ts", "apps/web/**"],
-      "outputs": ["playwright-report/**", "test-results/**", ".playwright/**"],
-      "env": ["BASE_URL", "TEST_USER_EMAIL", "TEST_USER_PASSWORD"],
-      "outputLogs": "errors-only"
+      "inputs": ["tests/**", "playwright.config.ts"],
+      "outputs": ["playwright-report/**", "test-results/**"],
+      "env": ["BASE_URL", "TEST_USER_EMAIL", "TEST_USER_PASSWORD"]
+    },
+    "deploy": {
+      "dependsOn": ["build", "lint", "check-types"],
+      "cache": false
     }
-  },
-  "globalEnv": [
-    "NODE_ENV",
-    "VERCEL_ENV",
-    "VERCEL_URL",
-    "PORT"
-  ]
+  }
 }

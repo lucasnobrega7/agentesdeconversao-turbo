@@ -20,7 +20,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "build:widget": "tsup src/widget.ts --format iife --minify --global-name AgentesChat --outDir dist",
+    "build:widget": "tsup src/widget.tsx --format iife --minify --global-name AgentesChat --outDir dist",
     "dev": "tsup --watch",
     "lint": "eslint .",
     "check-types": "tsc --noEmit"
@@ -40,6 +40,9 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
-    "framer-motion": "^10.16.5"
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.460.0",
+    "motion": "^12.16.0",
+    "tailwind-merge": "^2.2.0"
   }
 }

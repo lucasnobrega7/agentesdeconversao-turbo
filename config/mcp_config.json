@@ -1,0 +1,175 @@
+{
+  "mcp_version": "1.0",
+  "name": "agentes-conversao-mcp",
+  "description": "MCP configuration for Agentes de Conversão - Enables AI agents to access external data sources",
+  
+  "servers": [
+    {
+      "name": "google-drive",
+      "type": "filesystem",
+      "config": {
+        "provider": "google-drive",
+        "auth_type": "oauth2",
+        "scopes": ["drive.readonly"],
+        "allowed_mime_types": [
+          "application/pdf",
+          "application/vnd.google-apps.document",
+          "application/vnd.google-apps.spreadsheet",
+          "text/plain",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ]
+      }
+    },
+    {
+      "name": "crm-integration",
+      "type": "api",
+      "config": {
+        "base_url": "${CRM_API_URL}",
+        "auth_type": "bearer",
+        "auth_token": "${CRM_API_TOKEN}",
+        "endpoints": {
+          "get_lead": "/api/leads/{lead_id}",
+          "update_lead": "/api/leads/{lead_id}",
+          "get_lead_history": "/api/leads/{lead_id}/history",
+          "create_note": "/api/leads/{lead_id}/notes"
+        }
+      }
+    },
+    {
+      "name": "google-sheets",
+      "type": "spreadsheet",
+      "config": {
+        "provider": "google-sheets",
+        "auth_type": "service_account",
+        "allowed_operations": ["read", "write"],
+        "cache_ttl": 300
+      }
+    },
+    {
+      "name": "knowledge-base",
+      "type": "vector-store",
+      "config": {
+        "provider": "qdrant",
+        "host": "qdrant",
+        "port": 6333,
+        "collection_prefix": "agent_knowledge_",
+        "embedding_model": "text-embedding-3-small"
+      }
+    },
+    {
+      "name": "email-provider",
+      "type": "communication",
+      "config": {
+        "provider": "gmail",
+        "auth_type": "oauth2",
+        "allowed_operations": ["read", "send"],
+        "filters": {
+          "from_domain": "${COMPANY_DOMAIN}",
+          "labels": ["leads", "customers"]
+        }
+      }
+    },
+    {
+      "name": "calendar",
+      "type": "scheduling",
+      "config": {
+        "provider": "google-calendar",
+        "auth_type": "oauth2",
+        "allowed_operations": ["read", "create_event"],
+        "business_hours": {
+          "timezone": "America/Sao_Paulo",
+          "monday": "09:00-18:00",
+          "tuesday": "09:00-18:00",
+          "wednesday": "09:00-18:00",
+          "thursday": "09:00-18:00",
+          "friday": "09:00-18:00"
+        }
+      }
+    },
+    {
+      "name": "erp-system",
+      "type": "database",
+      "config": {
+        "provider": "custom",
+        "connection_string": "${ERP_CONNECTION_STRING}",
+        "allowed_tables": ["products", "inventory", "prices", "orders"],
+        "read_only": true,
+        "cache_ttl": 600
+      }
+    }
+  ],
+  
+  "tools": [
+    {
+      "name": "search_knowledge",
+      "description": "Search in the company's knowledge base",
+      "server": "knowledge-base",
+      "parameters": {
+        "query": "string",
+        "limit": "number",
+        "filters": "object"
+      }
+    },
+    {
+      "name": "get_lead_info",
+      "description": "Get detailed information about a lead from CRM",
+      "server": "crm-integration",
+      "parameters": {
+        "lead_id": "string",
+        "include_history": "boolean"
+      }
+    },
+    {
+      "name": "check_inventory",
+      "description": "Check product availability in ERP",
+      "server": "erp-system",
+      "parameters": {
+        "product_id": "string",
+        "location": "string"
+      }
+    },
+    {
+      "name": "schedule_meeting",
+      "description": "Schedule a meeting with the lead",
+      "server": "calendar",
+      "parameters": {
+        "lead_email": "string",
+        "duration_minutes": "number",
+        "preferred_dates": "array"
+      }
+    },
+    {
+      "name": "read_document",
+      "description": "Read and extract information from Google Drive documents",
+      "server": "google-drive",
+      "parameters": {
+        "document_id": "string",
+        "extract_type": "string"
+      }
+    }
+  ],
+  
+  "security": {
+    "rate_limiting": {
+      "requests_per_minute": 60,
+      "requests_per_hour": 1000
+    },
+    "allowed_ips": ["*"],
+    "encryption": "tls1.3",
+    "audit_log": true
+  },
+  
+  "caching": {
+    "enabled": true,
+    "provider": "redis",
+    "default_ttl": 300,
+    "max_size": "1GB"
+  },
+  
+  "monitoring": {
+    "enabled": true,
+    "metrics_endpoint": "/metrics",
+    "health_endpoint": "/health",
+    "log_level": "info"
+  }
+}

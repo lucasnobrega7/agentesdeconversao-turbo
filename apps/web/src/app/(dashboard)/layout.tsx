@@ -6,9 +6,10 @@ import { Zap, Search } from 'lucide-react'
 
 import { NavigationSidebar } from '@/components/navigation-sidebar'
 import { ModeToggle } from '@/components/mode-toggle'
-import { UserNav } from '@/components/dashboard/user-nav'
-import { OrganizationSwitcher } from '@/components/dashboard/organization-switcher'
-import { NotificationsDropdown } from '@/components/dashboard/notifications-dropdown'
+// Componentes temporariamente removidos até serem criados
+// import { UserNav } from '@/components/dashboard/user-nav'
+// import { OrganizationSwitcher } from '@/components/dashboard/organization-switcher'
+// import { NotificationsDropdown } from '@/components/dashboard/notifications-dropdown'
 
 export default function DashboardLayout({
   children,
@@ -25,7 +26,7 @@ export default function DashboardLayout({
               <Zap className="h-6 w-6 text-primary" />
               <span className="font-bold">Agentes de Conversão</span>
             </Link>
-            <OrganizationSwitcher />
+            {/* <OrganizationSwitcher /> */}
           </div>
           
           <div className="flex flex-1 items-center justify-between">
@@ -46,9 +47,10 @@ export default function DashboardLayout({
                 dash.agentesdeconversao.ai
               </span>
               
-              <NotificationsDropdown />
+              {/* <NotificationsDropdown /> */}
               <ModeToggle />
-              <UserNav />
+              {/* <UserNav /> */}
+              <div className="text-sm">Dashboard</div>
             </div>
           </div>
         </div>
