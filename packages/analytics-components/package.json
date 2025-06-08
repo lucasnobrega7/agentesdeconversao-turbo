@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
-    "@repo/types": "workspace:*",
+    "@agentes/types": "workspace:*",
     "recharts": "^2.9.3",
     "@tremor/react": "^3.14.0",
     "date-fns": "^3.0.0"

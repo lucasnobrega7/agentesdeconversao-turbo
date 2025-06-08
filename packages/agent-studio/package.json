@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
-    "@repo/types": "workspace:*",
+    "@agentes/types": "workspace:*",
     "@repo/ui": "workspace:*",
     "@xyflow/react": "12.6.4",
     "lucide-react": "^0.513.0",
